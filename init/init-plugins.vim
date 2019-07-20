@@ -16,7 +16,8 @@
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
 	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
-	let g:bundle_group += ['leaderf','neofomart','rainbow','coc']
+	let g:bundle_group += ['leaderf','neofomart','rainbow']
+	let g:bundle_group += ['ycm']
 endif
 
 
@@ -32,9 +33,9 @@ endfunc
 
 
 "----------------------------------------------------------------------
-" 在 ~/.nvim/bundles 下安装插件
+" 在 ~/.vim/bundles 下安装插件
 "----------------------------------------------------------------------
-call plug#begin(get(g:, 'bundle_home', '~/.nvim/bundles'))
+call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 
 
 "----------------------------------------------------------------------
@@ -425,6 +426,7 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'rainbow') >= 0
 	Plug 'luochen1990/rainbow'
+	let g:rainbow_active = 1
 	let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
 	\	'ctermfgs': ['lightblue', 'lightyellow', 'lightcyan', 'lightmagenta'],
@@ -435,19 +437,19 @@ if index(g:bundle_group, 'rainbow') >= 0
 	\	'separately': {
 	\		'*': {},
 	\		'markdown': {
-	\			'parentheses_options': 'containedin=markdownCode contained',
+	\			'parentheses_options': 'containedin=markdownCode contained', 
 	\		},
 	\		'lisp': {
 	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
 	\		},
 	\		'haskell': {
-	\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'], 
+	\			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
 	\		},
 	\		'vim': {
-	\			'parentheses_options': 'containedin=vimFuncBody', 
+	\			'parentheses_options': 'containedin=vimFuncBody',
 	\		},
 	\		'perl': {
-	\			'syn_name_prefix': 'perlBlockFoldRainbow', 
+	\			'syn_name_prefix': 'perlBlockFoldRainbow',
 	\		},
 	\		'stylus': {
 	\			'parentheses': ['start=/{/ end=/}/ fold contains=@colorableGroup'],
@@ -456,6 +458,8 @@ if index(g:bundle_group, 'rainbow') >= 0
 	\	}
 	\}
 endif
+
+
 
 "----------------------------------------------------------------------
 " neoformat
@@ -702,6 +706,96 @@ if index(g:bundle_group, 'coc') >= 0
 	nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 	" Resume latest coc list
 	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+endif
+
+
+"----------------------------------------------------------------------
+"ycm
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'ycm') >= 0
+	Plug 'ycm-core/YouCompleteMe'
+	Plug 'zxqfl/tabnine-vim'
+	" 禁用预览功能：扰乱视听
+	let g:ycm_goto_buffer_command = 'vertical-split'
+	let g:ycm_add_preview_to_completeopt = 1
+	let g:ycm_language_server =
+	\[ 
+	\   {
+	\     'name': 'py',
+	\     'cmdline': [ '/usr/local/bin/pyls','--stdio' ],
+	\     'filetypes': [ 'py' ]
+	\   },
+	\]
+	" 禁用诊断功能：我们用前面更好用的 ALE 代替
+	let g:ycm_show_diagnostics_ui = 0
+	let g:ycm_server_log_level = 'info'
+	let g:ycm_min_num_identifier_candidate_chars = 2
+	let g:ycm_collect_identifiers_from_comments_and_strings = 1
+	let g:ycm_complete_in_strings=1
+	let g:ycm_key_invoke_completion = '<c-z>'
+	set completeopt=menu,menuone,noselect
+
+	" noremap <c-z> <NOP>
+
+"两个字符自动触发语义补全
+	let g:ycm_semantic_triggers =  {
+				\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+				\ 'cs,lua,javascript': ['re!\w{2}'],
+				\ }
+	let g:ycm_filetype_whitelist = { 
+				\ "c":1,
+				\ "cpp":1, 
+				\ "objc":1,
+				\ "objcpp":1,
+				\ "python":1,
+				\ "java":1,
+				\ "javascript":1,
+				\ "coffee":1,
+				\ "vim":1, 
+				\ "go":1,
+				\ "cs":1,
+				\ "lua":1,
+				\ "perl":1,
+				\ "perl6":1,
+				\ "php":1,
+				\ "ruby":1,
+				\ "rust":1,
+				\ "erlang":1,
+				\ "asm":1,
+				\ "nasm":1,
+				\ "masm":1,
+				\ "tasm":1,
+				\ "asm68k":1,
+				\ "asmh8300":1,
+				\ "asciidoc":1,
+				\ "basic":1,
+				\ "vb":1,
+				\ "make":1,
+				\ "cmake":1,
+				\ "html":1,
+				\ "css":1,
+				\ "less":1,
+				\ "json":1,
+				\ "cson":1,
+				\ "typedscript":1,
+				\ "haskell":1,
+				\ "lhaskell":1,
+				\ "lisp":1,
+				\ "scheme":1,
+				\ "sdl":1,
+				\ "sh":1,
+				\ "zsh":1,
+				\ "bash":1,
+				\ "man":1,
+				\ "markdown":1,
+				\ "matlab":1,
+				\ "maxima":1,
+				\ "dosini":1,
+				\ "conf":1,
+				\ "config":1,
+				\ "zimbu":1,
+				\ "ps1":1,
+				\ }
 endif
 
 "----------------------------------------------------------------------

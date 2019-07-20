@@ -3,7 +3,7 @@
 " Maintainer: skywind3000 (at) gmail.com, 2016, 2017, 2018, 2019
 " Homepage: http://www.vim.org/scripts/script.php?script_id=5431
 "
-" Last Modified: 2019/01/26 01:50
+" Last Modified: 2019/04/28 14:55
 "
 " Run shell command in background and output to quickfix:
 "     :AsyncRun[!] [options] {cmd} ...
@@ -182,6 +182,10 @@ if !exists('g:asyncrun_save')
 	let g:asyncrun_save = 0
 endif
 
+if !exists('g:asyncrun_stdin')
+	let g:asyncrun_stdin = has('win32') || has('win64') || has('win95')
+endif
+
 
 
 "----------------------------------------------------------------------
@@ -217,7 +221,7 @@ function! s:chdir(path)
 	if has('nvim')
 		let cmd = haslocaldir()? 'lcd' : (haslocaldir(-1, 0)? 'tcd' : 'cd')
 	else
-		let cmd = haslocaldir()? 'lcd' : 'cd'
+		let cmd = haslocaldir()? ((haslocaldir() == 1)? 'lcd' : 'tcd') : 'cd'
 	endif
 	silent execute cmd . ' '. fnameescape(a:path)
 endfunc
@@ -648,7 +652,6 @@ function! s:AsyncRun_Job_Start(cmd)
 	let s:async_output = {}
 	let s:async_head = 0
 	let s:async_tail = 0
-	let s:async_efm = &errorformat
 	let s:async_info.post = s:async_info.postsave
 	let s:async_info.auto = s:async_info.autosave
 	let s:async_info.postsave = ''
@@ -676,7 +679,9 @@ function! s:AsyncRun_Job_Start(cmd)
 			let l:options['in_top'] = s:async_info.range_top
 			let l:options['in_bot'] = s:async_info.range_bot
 		elseif exists('*ch_close_in')
-			let l:options['in_io'] = 'pipe'
+			if g:asyncrun_stdin != 0
+				let l:options['in_io'] = 'pipe'
+			endif
 		endif
 		let s:async_job = job_start(l:args, l:options)
 		let l:success = (job_status(s:async_job) != 'fail')? 1 : 0
@@ -1018,10 +1023,13 @@ function! s:run(opts)
 	" process makeprg/grepprg in -program=?
 	let l:program = ""
 
+	let s:async_efm = &errorformat
+
 	if l:opts.program == 'make'
 		let l:program = &makeprg
 	elseif l:opts.program == 'grep'
 		let l:program = &grepprg
+		let s:async_efm = &grepformat
 	endif
 
 	if l:program != ''
@@ -1326,7 +1334,7 @@ endfunc
 " asyncrun -version
 "----------------------------------------------------------------------
 function! asyncrun#version()
-	return '2.0.6'
+	return '2.0.8'
 endfunc
 
 

@@ -15,6 +15,15 @@
 "======================================================================
 " vim: set ts=4 sw=4 tw=78 noet :
 
+"快速移动
+map <space><space> <Plug>(easymotion-prefix)
+
+nnoremap <silent> <F12> :call SaveFile()<cr>
+"======================================================================
+"全文保存
+function! SaveFile()
+	exec 'AsyncRun cat % |xsel -b -i'
+endfunc
 
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位
