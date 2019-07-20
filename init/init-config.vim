@@ -37,7 +37,7 @@ if has('nvim') == 0 && has('gui_running') == 0
 	for c in [',', '.', '/', ';', '{', '}']
 		call s:metacode(c)
 	endfor
-	for c in ['?', ':', '-', '_', '+', '=', "'"]
+	for c in ['?','-', '_', '+', '=', "'"]
 		call s:metacode(c)
 	endfor
 endif
