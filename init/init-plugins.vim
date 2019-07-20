@@ -16,8 +16,8 @@
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
 	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
-	let g:bundle_group += ['leaderf','neofomart','rainbow']
-	let g:bundle_group += ['ycm']
+	let g:bundle_group += ['leaderf','neofomart','rainbow','nerdcommenter']
+	let g:bundle_group += ['coc']
 endif
 
 
@@ -420,6 +420,17 @@ if index(g:bundle_group, 'echodoc') >= 0
 	let g:echodoc#enable_at_startup = 1
 endif
 
+"----------------------------------------------------------------------
+"nerdcommenter
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'nerdcommenter') >= 0
+	Plug 'scrooloose/nerdcommenter'
+	let g:NERDSpaceDelims = 1
+	nmap \c :call NERDComment("","toggle")<cr>
+	vmap \c :call NERDComment("","toggle")<cr>
+	imap \c :call NERDComment("","toggle")<cr>
+endif
+
 
 "----------------------------------------------------------------------
 " rainbow
@@ -593,7 +604,7 @@ if index(g:bundle_group, 'coc') >= 0
 	set nowritebackup
 
 	" Better display for messages
-	set cmdheight=2
+	set cmdheight=1
 
 	" You will have bad experience for diagnostic messages when it's default 4000.
 	set updatetime=300

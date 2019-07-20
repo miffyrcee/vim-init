@@ -16,6 +16,7 @@
 " vim: set ts=4 sw=4 tw=78 noet :
 
 "快速移动
+let mapleader = "\\"
 map <space><space> <Plug>(easymotion-prefix)
 
 nnoremap <silent> <F12> :call SaveFile()<cr>
