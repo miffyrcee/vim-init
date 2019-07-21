@@ -724,11 +724,11 @@ endif
 "ycm
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'ycm') >= 0
+	" Plug 'zxqfl/tabnine-vim'
 	Plug 'ycm-core/YouCompleteMe'
-	Plug 'zxqfl/tabnine-vim'
 	" 禁用预览功能：扰乱视听
-	let g:ycm_goto_buffer_command = 'vertical-split'
-	let g:ycm_add_preview_to_completeopt = 1
+	let g:ycm_goto_buffer_command = 'same-buffer'
+	let g:ycm_add_preview_to_completeopt = 0
 	let g:ycm_language_server =
 	\[ 
 	\   {
@@ -747,8 +747,11 @@ if index(g:bundle_group, 'ycm') >= 0
 	set completeopt=menu,menuone,noselect
 
 	" noremap <c-z> <NOP>
+	nnoremap gl :YcmCompleter GoToDeclaration<CR>
+	nnoremap gf :YcmCompleter GoToDefinition<CR>
+	" nnoremap gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-"两个字符自动触发语义补全
+	"两个字符自动触发语义补全
 	let g:ycm_semantic_triggers =  {
 				\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
 				\ 'cs,lua,javascript': ['re!\w{2}'],
