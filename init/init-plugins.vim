@@ -15,9 +15,9 @@
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
-	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
+	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc','indentLine']
 	let g:bundle_group += ['leaderf','neofomart','rainbow','nerdcommenter']
-	let g:bundle_group += ['ycm']
+	let g:bundle_group += ['coc']
 endif
 
 
@@ -426,7 +426,7 @@ if index(g:bundle_group, 'echodoc') >= 0
 endif
 
 "----------------------------------------------------------------------
-" IndentLine
+" indentLine
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'indentLine') >= 0
 	Plug 'Yggdroot/indentLine'
