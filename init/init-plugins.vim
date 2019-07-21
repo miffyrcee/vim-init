@@ -17,7 +17,7 @@ if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
 	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart','rainbow','nerdcommenter']
-	let g:bundle_group += ['coc']
+	let g:bundle_group += ['ycm']
 endif
 
 
@@ -142,6 +142,11 @@ if index(g:bundle_group, 'basic') >= 0
 	let g:signify_vcs_cmds = {
 			\ 'git': 'git diff --no-color --diff-algorithm=histogram --no-ext-diff -U0 -- %f',
 			\}
+	let g:calendar_navi = 'top'
+	let g:EchoFuncTrimSize = 1
+	let g:EchoFuncBallonOnly = 1
+	let g:startify_disable_at_vimenter = 1
+	let g:startify_session_dir = '~/.vim/session'
 endif
 
 
@@ -418,6 +423,21 @@ if index(g:bundle_group, 'echodoc') >= 0
 	Plug 'Shougo/echodoc.vim'
 	set noshowmode
 	let g:echodoc#enable_at_startup = 1
+endif
+
+"----------------------------------------------------------------------
+" IndentLine
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'indentLine') >= 0
+	Plug 'Yggdroot/indentLine'
+	let g:indentLine_color_term = 239        
+	let g:indentLine_color_gui = '#A4E57E'    
+	let g:indentLine_color_tty_light = 7 " (default: 4)    
+	let g:indentLine_color_dark = 1 " (default: 2)    
+	let g:indentLine_bgcolor_term = 202      
+	let g:indentLine_bgcolor_gui = '#FF5F00'    
+	let g:indentLine_char = '|'    
+	let g:indentLine_enabled = 1 
 endif
 
 "----------------------------------------------------------------------
@@ -721,22 +741,17 @@ endif
 
 
 "----------------------------------------------------------------------
-"ycm
+" Youcomplete
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'ycm') >= 0
 	" Plug 'zxqfl/tabnine-vim'
 	Plug 'ycm-core/YouCompleteMe'
+	Plug 'SirVer/ultisnips'
+	" Snippets are separated from the engine. Add this if you want them:
+	Plug 'honza/vim-snippets'
 	" 禁用预览功能：扰乱视听
-	let g:ycm_goto_buffer_command = 'same-buffer'
 	let g:ycm_add_preview_to_completeopt = 0
-	let g:ycm_language_server =
-	\[ 
-	\   {
-	\     'name': 'py',
-	\     'cmdline': [ '/usr/local/bin/pyls','--stdio' ],
-	\     'filetypes': [ 'py' ]
-	\   },
-	\]
+
 	" 禁用诊断功能：我们用前面更好用的 ALE 代替
 	let g:ycm_show_diagnostics_ui = 0
 	let g:ycm_server_log_level = 'info'
@@ -745,12 +760,17 @@ if index(g:bundle_group, 'ycm') >= 0
 	let g:ycm_complete_in_strings=1
 	let g:ycm_key_invoke_completion = '<c-z>'
 	set completeopt=menu,menuone,noselect
-
 	" noremap <c-z> <NOP>
-	nnoremap gl :YcmCompleter GoToDeclaration<CR>
-	nnoremap gf :YcmCompleter GoToDefinition<CR>
-	" nnoremap gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nnoremap gl :rightbelow vertical YcmCompleter GoToDeclaration<CR>
+	nnoremap gf :rightbelow vertical YcmCompleter GoToDefinition<CR>
+	nnoremap gd :rightbelow vertical YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+	let g:UltiSnipsExpandTrigger="<m-e>"
+	let g:UltiSnipsJumpForwardTrigger="<m-n>"
+	let g:UltiSnipsJumpBackwardTrigger="<m-p>"
+	let g:UltiSnipsListSnippets="<m-m>"
+	let g:UltiSnipsSnippetDirectories  = ['UltiSnips']
+	let g:UltiSnipsSnippetsDir = '~/.vim/bundles/vim-snippets'
 	"两个字符自动触发语义补全
 	let g:ycm_semantic_triggers =  {
 				\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
@@ -816,3 +836,7 @@ endif
 " 结束插件安装
 "----------------------------------------------------------------------
 call plug#end()
+augroup auto_save
+autocmd!
+autocmd BufWritePre ~/.vimrc undojoin | source ~/.vimrc
+augroup END

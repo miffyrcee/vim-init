@@ -36,7 +36,7 @@ set showcmd
 " set showmode
 
 " 水平切割窗口时，默认在右边显示新窗口
-set splitright
+" set splitright
 
 
 "----------------------------------------------------------------------
