@@ -15,7 +15,7 @@
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
-	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc','indentLine']
+	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart','rainbow','nerdcommenter']
 	let g:bundle_group += ['coc']
 endif
@@ -616,7 +616,6 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	" if hidden is not set, TextEdit might fail.
 	set hidden
 
 	" Some servers have issues with backup files, see #649
@@ -624,7 +623,7 @@ if index(g:bundle_group, 'coc') >= 0
 	set nowritebackup
 
 	" Better display for messages
-	set cmdheight=1
+	" set cmdheight=2
 
 	" You will have bad experience for diagnostic messages when it's default 4000.
 	set updatetime=300
@@ -737,6 +736,7 @@ if index(g:bundle_group, 'coc') >= 0
 	nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 	" Resume latest coc list
 	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+	set statusline^=%{coc#status()}
 endif
 
 
@@ -764,6 +764,15 @@ if index(g:bundle_group, 'ycm') >= 0
 	nnoremap gl :rightbelow vertical YcmCompleter GoToDeclaration<CR>
 	nnoremap gf :rightbelow vertical YcmCompleter GoToDefinition<CR>
 	nnoremap gd :rightbelow vertical YcmCompleter GoToDefinitionElseDeclaration<CR>
+	let g:ycm_language_server = 
+  \ [ 
+  \   {
+  \     'name': 'python',
+  \     'cmdline': [ '/usr/local/bin/pyls', '--stdio' ],
+  \     'filetypes': [ 'python' ]
+  \   }
+  \ ]
+	
 
 	let g:UltiSnipsExpandTrigger="<m-e>"
 	let g:UltiSnipsJumpForwardTrigger="<m-n>"
