@@ -16,7 +16,7 @@
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
 	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
-	let g:bundle_group += ['leaderf','neofomart','rainbow','nerdcommenter']
+	let g:bundle_group += ['leaderf','neofomart','rainbow']
 	let g:bundle_group += ['coc']
 endif
 
@@ -53,6 +53,9 @@ Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
 
 " Diff 增强，支持 histogram / patience 等更科学的 diff 算法
 Plug 'chrisbra/vim-diff-enhanced'
+
+" Run Async Shell Commands 
+Plug 'skywind3000/asyncrun.vim'
 
 
 "----------------------------------------------------------------------
@@ -764,15 +767,6 @@ if index(g:bundle_group, 'ycm') >= 0
 	nnoremap gl :rightbelow vertical YcmCompleter GoToDeclaration<CR>
 	nnoremap gf :rightbelow vertical YcmCompleter GoToDefinition<CR>
 	nnoremap gd :rightbelow vertical YcmCompleter GoToDefinitionElseDeclaration<CR>
-	let g:ycm_language_server = 
-  \ [ 
-  \   {
-  \     'name': 'python',
-  \     'cmdline': [ '/usr/local/bin/pyls', '--stdio' ],
-  \     'filetypes': [ 'python' ]
-  \   }
-  \ ]
-	
 
 	let g:UltiSnipsExpandTrigger="<m-e>"
 	let g:UltiSnipsJumpForwardTrigger="<m-n>"
