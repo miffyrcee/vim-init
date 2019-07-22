@@ -14,9 +14,9 @@
 " 默认情况下的分组，可以再前面覆盖之
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
-	let g:bundle_group = ['basic', 'tags', 'enhanced', 'filetypes', 'textobj']
+	let g:bundle_group = ['rainbow','basic', 'tags', 'enhanced','textobj','indentLine']
 	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
-	let g:bundle_group += ['leaderf','neofomart','rainbow']
+	let g:bundle_group += ['leaderf','neofomart']
 	let g:bundle_group += ['coc']
 endif
 
@@ -238,32 +238,11 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'textobj') >= 0
 
-	" 基础插件：提供让用户方便的自定义文本对象的接口
-	Plug 'kana/vim-textobj-user'
-
-	" indent 文本对象：ii/ai 表示当前缩进，vii 选中当缩进，cii 改写缩进
-	Plug 'kana/vim-textobj-indent'
-
-	" 语法文本对象：iy/ay 基于语法的文本对象
-	Plug 'kana/vim-textobj-syntax'
-
-	" 函数文本对象：if/af 支持 c/c++/vim/java
-	Plug 'kana/vim-textobj-function', { 'for':['c', 'cpp', 'vim', 'java'] }
-
-	" 参数文本对象：i,/a, 包括参数或者列表元素
-	Plug 'sgur/vim-textobj-parameter'
-
-	" 提供 python 相关文本对象，if/af 表示函数，ic/ac 表示类
-	Plug 'bps/vim-textobj-python', {'for': 'python'}
-
-	" 提供 uri/url 的文本对象，iu/au 表示
-	Plug 'jceb/vim-textobj-uri'
-
 	"添加外括号
-	Plug 'tpope/vim-surround'
+	Plug 'wellle/targets.vim'
 
 	"iw跳转
-	Plug 'wellle/targets.vim'
+	Plug 'tpope/vim-surround'
 
 endif
 
@@ -433,27 +412,17 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'indentLine') >= 0
 	Plug 'Yggdroot/indentLine'
-	let g:indentLine_color_term = 239        
-	let g:indentLine_color_gui = '#A4E57E'    
+	let g:indentLine_color_term = 55        
+	let g:indentLine_color_gui = '#87AFAF'    
+	" let g:indentLine_color_term = 239        
+	" let g:indentLine_color_gui = '#A4E57E'    
 	let g:indentLine_color_tty_light = 7 " (default: 4)    
 	let g:indentLine_color_dark = 1 " (default: 2)    
-	let g:indentLine_bgcolor_term = 202      
-	let g:indentLine_bgcolor_gui = '#FF5F00'    
-	let g:indentLine_char = '|'    
+	" let g:indentLine_bgcolor_term = 202      
+	" let g:indentLine_bgcolor_gui = '#FF5F00'    
+	let g:indentLine_char = '┊'    
 	let g:indentLine_enabled = 1 
 endif
-
-"----------------------------------------------------------------------
-"nerdcommenter
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'nerdcommenter') >= 0
-	Plug 'scrooloose/nerdcommenter'
-	let g:NERDSpaceDelims = 1
-	nmap \c :call NERDComment("","toggle")<cr>
-	vmap \c :call NERDComment("","toggle")<cr>
-	imap \c :call NERDComment("","toggle")<cr>
-endif
-
 
 "----------------------------------------------------------------------
 " rainbow
