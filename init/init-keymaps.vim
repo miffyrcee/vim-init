@@ -19,9 +19,9 @@
 let mapleader = "\\"
 map <space><space> <Plug>(easymotion-prefix)
 
-nnoremap <silent> <F12> :call SaveFile()<cr>
 "======================================================================
 "全文保存
+nnoremap <silent> <F12> :call SaveFile()<cr>
 function! SaveFile()
 	exec 'AsyncRun cat % |xsel -b -i'
 endfunc
