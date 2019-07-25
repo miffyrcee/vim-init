@@ -397,7 +397,6 @@ if index(g:bundle_group, 'ale') >= 0
 	endif
 endif
 
-
 "----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
 "----------------------------------------------------------------------
@@ -412,8 +411,8 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'indentLine') >= 0
 	Plug 'Yggdroot/indentLine'
-	let g:indentLine_color_term = 55        
-	let g:indentLine_color_gui = '#87AFAF'    
+	let g:indentLine_color_term = 126        
+	" let g:indentLine_color_gui = '#e3f9fd'    
 	" let g:indentLine_color_term = 239        
 	" let g:indentLine_color_gui = '#A4E57E'    
 	let g:indentLine_color_tty_light = 7 " (default: 4)    
@@ -716,7 +715,6 @@ endif
 " Youcomplete
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'ycm') >= 0
-	" Plug 'zxqfl/tabnine-vim'
 	Plug 'ycm-core/YouCompleteMe'
 	Plug 'SirVer/ultisnips'
 	" Snippets are separated from the engine. Add this if you want them:
