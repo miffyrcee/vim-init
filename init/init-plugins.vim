@@ -6,7 +6,7 @@
 " Last Modified: 2018/06/10 23:11
 "
 "======================================================================
-" vim: set ts=4 sw=4 tw=78 noet :
+" vim: se ts=4 sw=4 tw=78 noet :
 
 
 
@@ -14,10 +14,14 @@
 " 默认情况下的分组，可以再前面覆盖之
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
-	let g:bundle_group = ['rainbow','basic', 'tags', 'enhanced','textobj','indentLine']
+	let g:bundle_group = ['rainbow','basic', 'tags', 'enhanced','indentLine']
 	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart']
-	let g:bundle_group += ['coc']
+	" if index(['c', 'cpp', 'rs', 'go','python'], &ft) < 0
+	" 	let g:bundle_group += ['ycm']
+	" else
+		let g:bundle_group += ['coc']
+	" endif
 endif
 
 
@@ -25,7 +29,6 @@ endif
 " 计算当前 vim-init 的子路径
 "----------------------------------------------------------------------
 let s:home = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
-
 function! s:path(path)
 	let path = expand(s:home . '/' . a:path )
 	return substitute(path, '\\', '/', 'g')
@@ -173,12 +176,15 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 使用 :CtrlSF 命令进行模仿 sublime 的 grep
 	Plug 'dyng/ctrlsf.vim'
 
-	" 配对括号和引号自动补全
-	Plug 'Raimondi/delimitMate'
-
 	" 提供 gist 接口
 	Plug 'lambdalisue/vim-gista', { 'on': 'Gista' }
 	
+	"添加外括号
+	Plug 'wellle/targets.vim'
+
+	"iw跳转
+	Plug 'tpope/vim-surround'
+
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
 	map <m--> <Plug>(expand_region_shrink)
@@ -230,49 +236,6 @@ if index(g:bundle_group, 'tags') >= 0
 
 	" 禁止 gutentags 自动链接 gtags 数据库
 	let g:gutentags_auto_add_gtags_cscope = 0
-endif
-
-
-"----------------------------------------------------------------------
-" 文本对象：textobj 全家桶
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'textobj') >= 0
-
-	"添加外括号
-	Plug 'wellle/targets.vim'
-
-	"iw跳转
-	Plug 'tpope/vim-surround'
-
-endif
-
-
-"----------------------------------------------------------------------
-" 文件类型扩展
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'filetypes') >= 0
-
-	" powershell 脚本文件的语法高亮
-	Plug 'pprovost/vim-ps1', { 'for': 'ps1' }
-
-	" lua 语法高亮增强
-	Plug 'tbastos/vim-lua', { 'for': 'lua' }
-
-	" C++ 语法高亮增强，支持 11/14/17 标准
-	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
-
-	" 额外语法文件
-	Plug 'justinmk/vim-syntax-extra', { 'for': ['c', 'bison', 'flex', 'cpp'] }
-
-	" python 语法文件增强
-	Plug 'vim-python/python-syntax', { 'for': ['python'] }
-
-	" rust 语法增强
-	Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-
-	" vim org-mode 
-	Plug 'jceb/vim-orgmode', { 'for': 'org' }
-
 endif
 
 
@@ -396,6 +359,65 @@ if index(g:bundle_group, 'ale') >= 0
 		let g:ale_linters.cpp += ['clang']
 	endif
 endif
+
+"----------------------------------------------------------------------
+" ncm2
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'ncm2') >= 0
+	Plug 'ncm2/ncm2'
+	Plug 'roxma/nvim-yarp'
+	Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-path'
+    Plug 'ncm2/ncm2-jedi'
+	Plug 'Raimondi/delimitMate'
+	    " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+    " found' messages
+    set shortmess+=c
+
+    " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+    inoremap <c-c> <ESC>
+
+    " When the <Enter> key is pressed while the popup menu is visible, it only
+    " hides the menu. Use this mapping to close the menu and also start a new
+    " line.
+    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+    " Use <TAB> to select the popup menu:
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    " wrap existing omnifunc
+    " Note that omnifunc does not run in background and may probably block the
+    " editor. If you don't want to be blocked by omnifunc too often, you could
+    " add 180ms delay before the omni wrapper:
+    "  'on_complete': ['ncm2#on_complete#delay', 180,
+    "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+    au User Ncm2Plugin call ncm2#register_source({
+            \ 'name' : 'css',
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+            \ })
+	" enable ncm2 for all buffers
+	autocmd BufEnter * call ncm2#enable_for_buffer()
+
+	" IMPORTANT: :help Ncm2PopupOpen for more information
+	set completeopt=noinsert,menuone,noselect
+	let g:pymode_rope = 0
+endif
+
+"----------------------------------------------------------------------
+" deoplete
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'deoplete') >= 0
+	Plug 'Shougo/deoplete.nvim'
+	let g:deoplete#enable_at_startup = 1
+endif
+
 
 "----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
@@ -587,6 +609,7 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	" Plug 'neoclide/coc.nvim', {'do': 'nodejs-yarn install --frozen-lockfile'}
 	set hidden
 
 	" Some servers have issues with backup files, see #649
@@ -719,6 +742,14 @@ if index(g:bundle_group, 'ycm') >= 0
 	Plug 'SirVer/ultisnips'
 	" Snippets are separated from the engine. Add this if you want them:
 	Plug 'honza/vim-snippets'
+	" 配对括号和引号自动补全
+	Plug 'Raimondi/delimitMate'
+	" C++ 语法高亮增强，支持 11/14/17 标准
+	Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
+	" 额外语法文件
+	Plug 'justinmk/vim-syntax-extra', { 'for': ['c', 'bison', 'flex', 'cpp'] }
+	" python 语法文件增强
+	" Plug 'vim-python/python-syntax', { 'for': ['python'] }
 	" 禁用预览功能：扰乱视听
 	let g:ycm_add_preview_to_completeopt = 0
 

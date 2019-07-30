@@ -283,7 +283,7 @@ function! ExecuteFile()
 		let cmd = '"$(VIM_FILEDIR)/$(VIM_FILENOEXT)"'
 	elseif &ft == 'python'
 		let $PYTHONUNBUFFERED=1 " 关闭 python 缓存，实时看到输出
-		let cmd = 'python "$(VIM_FILEPATH)"'
+		let cmd = 'python3 "$(VIM_FILEPATH)"'
 	elseif &ft == 'javascript'
 		let cmd = 'node "$(VIM_FILEPATH)"'
 	elseif &ft == 'perl'
