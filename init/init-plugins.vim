@@ -15,13 +15,9 @@
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
 	let g:bundle_group = ['rainbow','basic', 'tags', 'enhanced','indentLine']
-	let g:bundle_group += ['tags', 'airline', 'nerdtree', 'ale', 'echodoc']
-	let g:bundle_group += ['leaderf','neofomart']
-	" if index(['c', 'cpp', 'rs', 'go','python'], &ft) < 0
-	" 	let g:bundle_group += ['ycm']
-	" else
-		let g:bundle_group += ['coc']
-	" endif
+	let g:bundle_group += ['tags','nerdtree', 'echodoc']
+	let g:bundle_group += ['leaderf','neofomart','airline']
+	let g:bundle_group += ['coc']
 endif
 
 
@@ -258,8 +254,8 @@ if index(g:bundle_group, 'airline') >= 0
 	let g:airline#extensions#fugitiveline#enabled = 0
 	let g:airline#extensions#csv#enabled = 0
 	let g:airline#extensions#vimagit#enabled = 0
+	let g:airline#extensions#coc#enabled = 1
 endif
-
 
 "----------------------------------------------------------------------
 " NERDTree
@@ -275,24 +271,6 @@ if index(g:bundle_group, 'nerdtree') >= 0
 	noremap <space>nm :NERDTreeMirror<cr>
 	noremap <space>nt :NERDTreeToggle<cr>
 endif
-
-
-"----------------------------------------------------------------------
-" LanguageTool 语法检查
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'grammer') >= 0
-	Plug 'rhysd/vim-grammarous'
-	noremap <space>rg :GrammarousCheck --lang=en-US --no-move-to-first-error --no-preview<cr>
-	map <space>rr <Plug>(grammarous-open-info-window)
-	map <space>rv <Plug>(grammarous-move-to-info-window)
-	map <space>rs <Plug>(grammarous-reset)
-	map <space>rx <Plug>(grammarous-close-info-window)
-	map <space>rm <Plug>(grammarous-remove-error)
-	map <space>rd <Plug>(grammarous-disable-rule)
-	map <space>rn <Plug>(grammarous-move-to-next-error)
-	map <space>rp <Plug>(grammarous-move-to-previous-error)
-endif
-
 
 "----------------------------------------------------------------------
 " ale：动态语法检查
@@ -323,7 +301,7 @@ if index(g:bundle_group, 'ale') >= 0
 	let g:ale_linters = {
 				\ 'c': ['gcc', 'cppcheck'], 
 				\ 'cpp': ['gcc', 'cppcheck'], 
-				\ 'python': ['flake8', 'pylint'], 
+				\ 'python': ['flake8', 'pylint','pyls'], 
 				\ 'lua': ['luac'], 
 				\ 'go': ['go build', 'gofmt'],
 				\ 'java': ['javac'],
@@ -358,64 +336,6 @@ if index(g:bundle_group, 'ale') >= 0
 		let g:ale_linters.c += ['clang']
 		let g:ale_linters.cpp += ['clang']
 	endif
-endif
-
-"----------------------------------------------------------------------
-" ncm2
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'ncm2') >= 0
-	Plug 'ncm2/ncm2'
-	Plug 'roxma/nvim-yarp'
-	Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-path'
-    Plug 'ncm2/ncm2-jedi'
-	Plug 'Raimondi/delimitMate'
-	    " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-    " found' messages
-    set shortmess+=c
-
-    " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-    inoremap <c-c> <ESC>
-
-    " When the <Enter> key is pressed while the popup menu is visible, it only
-    " hides the menu. Use this mapping to close the menu and also start a new
-    " line.
-    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-    " Use <TAB> to select the popup menu:
-    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-    " wrap existing omnifunc
-    " Note that omnifunc does not run in background and may probably block the
-    " editor. If you don't want to be blocked by omnifunc too often, you could
-    " add 180ms delay before the omni wrapper:
-    "  'on_complete': ['ncm2#on_complete#delay', 180,
-    "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-    au User Ncm2Plugin call ncm2#register_source({
-            \ 'name' : 'css',
-            \ 'priority': 9,
-            \ 'subscope_enable': 1,
-            \ 'scope': ['css','scss'],
-            \ 'mark': 'css',
-            \ 'word_pattern': '[\w\-]+',
-            \ 'complete_pattern': ':\s*',
-            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-            \ })
-	" enable ncm2 for all buffers
-	autocmd BufEnter * call ncm2#enable_for_buffer()
-
-	" IMPORTANT: :help Ncm2PopupOpen for more information
-	set completeopt=noinsert,menuone,noselect
-	let g:pymode_rope = 0
-endif
-
-"----------------------------------------------------------------------
-" deoplete
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'deoplete') >= 0
-	Plug 'Shougo/deoplete.nvim'
-	let g:deoplete#enable_at_startup = 1
 endif
 
 
@@ -711,7 +631,7 @@ if index(g:bundle_group, 'coc') >= 0
 	command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 	" Add status line support, for integration with other plugin, checkout `:h coc-status`
-	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+	" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 	" Using CocList
 	" Show all diagnostics
