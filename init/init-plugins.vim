@@ -56,7 +56,6 @@ Plug 'chrisbra/vim-diff-enhanced'
 " Run Async Shell Commands 
 Plug 'skywind3000/asyncrun.vim'
 
-
 "----------------------------------------------------------------------
 " Dirvish 设置：自动排序并隐藏文件，同时定位到相关文件
 " 这个排序函数可以将目录排在前面，文件排在后面，并且按照字母顺序排序
@@ -160,11 +159,8 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 用 v 选中一个区域后，ALT_+/- 按分隔符扩大/缩小选区
 	Plug 'terryma/vim-expand-region'
 
-	" 快速文件搜索
-	Plug 'junegunn/fzf'
-
 	" 给不同语言提供字典补全，插入模式下 c-x c-k 触发
-	Plug 'asins/vim-dict'
+	" Plug 'asins/vim-dict'
 
 	" 使用 :FlyGrep 命令进行实时 grep
 	Plug 'wsdjeg/FlyGrep.vim'
@@ -175,11 +171,21 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 提供 gist 接口
 	Plug 'lambdalisue/vim-gista', { 'on': 'Gista' }
 	
+	" fz
+	Plug 'junegunn/fzf'
+
 	"添加外括号
 	Plug 'wellle/targets.vim'
 
 	"iw跳转
 	Plug 'tpope/vim-surround'
+
+	" .重复
+	Plug 'tpope/vim-repeat'
+	silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+	" .图标
+	Plug 'ryanoasis/vim-devicons'
 
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
@@ -338,6 +344,13 @@ if index(g:bundle_group, 'ale') >= 0
 	endif
 endif
 
+"----------------------------------------------------------------------
+" tabnine
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'tabnine') >= 0
+	Plug 'zxqfl/tabnine-vim'
+endif
+
 
 "----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
@@ -353,7 +366,7 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'indentLine') >= 0
 	Plug 'Yggdroot/indentLine'
-	let g:indentLine_color_term = 126        
+	let g:indentLine_color_term = 178        
 	" let g:indentLine_color_gui = '#e3f9fd'    
 	" let g:indentLine_color_term = 239        
 	" let g:indentLine_color_gui = '#A4E57E'    
@@ -631,8 +644,19 @@ if index(g:bundle_group, 'coc') >= 0
 	command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 	" Add status line support, for integration with other plugin, checkout `:h coc-status`
-	" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+	function! StatusDiagnostic() abort
+		let info = get(b:, 'coc_diagnostic_info', {})
+		if empty(info) | return '' | endif
+		let msgs = []
+		if get(info, 'error', 0)
+			call add(msgs, 'E' . info['error'])
+		endif
+		if get(info, 'warning', 0)
+			call add(msgs, 'W' . info['warning'])
+		endif
+		return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+	endfunction
 	" Using CocList
 	" Show all diagnostics
 	nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -650,7 +674,6 @@ if index(g:bundle_group, 'coc') >= 0
 	nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 	" Resume latest coc list
 	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-	set statusline^=%{coc#status()}
 endif
 
 
