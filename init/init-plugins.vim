@@ -159,9 +159,6 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 用 v 选中一个区域后，ALT_+/- 按分隔符扩大/缩小选区
 	Plug 'terryma/vim-expand-region'
 
-	" 给不同语言提供字典补全，插入模式下 c-x c-k 触发
-	" Plug 'asins/vim-dict'
-
 	" 使用 :FlyGrep 命令进行实时 grep
 	Plug 'wsdjeg/FlyGrep.vim'
 
@@ -644,6 +641,7 @@ if index(g:bundle_group, 'coc') >= 0
 	command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 	" Add status line support, for integration with other plugin, checkout `:h coc-status`
+	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 	function! StatusDiagnostic() abort
 		let info = get(b:, 'coc_diagnostic_info', {})
