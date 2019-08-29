@@ -96,7 +96,10 @@ if index(g:bundle_group, 'basic') >= 0
 	" 展示开始画面，显示最近编辑过的文件
 	Plug 'mhinz/vim-startify'
 
+	" 一次性安装一大堆 colorscheme
+	Plug 'flazz/vim-colorschemes'
 	" 支持库，给其他插件用的函数库
+	
 	Plug 'xolox/vim-misc'
 
 	" 用于在侧边符号栏显示 marks （ma-mz 记录的位置）
