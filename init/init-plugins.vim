@@ -17,7 +17,7 @@ if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced','indentLine','rainbow']
 	let g:bundle_group += ['tags','nerdtree', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart','airline']
-	let g:bundle_group += ['coc']
+	let g:bundle_group += ['coc','semshi']
 endif
 
 
@@ -353,6 +353,7 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'semshi') >= 0
 	Plug 'numirias/semshi'
+	let g:semshi#mark_selected_nodes=0
 	hi semshiLocal           ctermfg=209 guifg=#ff875f
 	hi semshiGlobal          ctermfg=214 guifg=#ffaf00
 	hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
@@ -371,8 +372,8 @@ if index(g:bundle_group, 'semshi') >= 0
 	function MyCustomHighlights()
 		hi semshiGlobal      ctermfg=red guifg=#ff0000
 	endfunction
-	autocmd FileType python call MyCustomHighlights()
-	autocmd ColorScheme * call MyCustomHighlights()
+	" autocmd FileType python call MyCustomHighlights()
+	" autocmd ColorScheme * call MyCustomHighlights()
 endif
 
 
