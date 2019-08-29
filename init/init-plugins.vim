@@ -14,7 +14,7 @@
 " 默认情况下的分组，可以再前面覆盖之
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
-	let g:bundle_group = ['rainbow','basic', 'tags', 'enhanced','indentLine']
+	let g:bundle_group = ['basic', 'tags', 'enhanced','indentLine','rainbow']
 	let g:bundle_group += ['tags','nerdtree', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart','airline']
 	let g:bundle_group += ['coc']
@@ -95,9 +95,6 @@ if index(g:bundle_group, 'basic') >= 0
 
 	" 展示开始画面，显示最近编辑过的文件
 	Plug 'mhinz/vim-startify'
-
-	" 一次性安装一大堆 colorscheme
-	Plug 'flazz/vim-colorschemes'
 
 	" 支持库，给其他插件用的函数库
 	Plug 'xolox/vim-misc'
@@ -348,6 +345,33 @@ if index(g:bundle_group, 'tabnine') >= 0
 	Plug 'zxqfl/tabnine-vim'
 endif
 
+"----------------------------------------------------------------------
+" semshi
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'semshi') >= 0
+	Plug 'numirias/semshi'
+	hi semshiLocal           ctermfg=209 guifg=#ff875f
+	hi semshiGlobal          ctermfg=214 guifg=#ffaf00
+	hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
+	hi semshiParameter       ctermfg=75  guifg=#5fafff
+	hi semshiParameterUnused ctermfg=117 guifg=#87d7ff cterm=underline gui=underline
+	hi semshiFree            ctermfg=218 guifg=#ffafd7
+	hi semshiBuiltin         ctermfg=207 guifg=#ff5fff
+	hi semshiAttribute       ctermfg=49  guifg=#00ffaf
+	hi semshiSelf            ctermfg=249 guifg=#b2b2b2
+	hi semshiUnresolved      ctermfg=226 guifg=#ffff00 cterm=underline gui=underline
+	hi semshiSelected        ctermfg=231 guifg=#ffffff ctermbg=161 guibg=#d7005f
+
+	hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+	hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
+	sign define semshiError text=E> texthl=semshiErrorSign
+	function MyCustomHighlights()
+		hi semshiGlobal      ctermfg=red guifg=#ff0000
+	endfunction
+	autocmd FileType python call MyCustomHighlights()
+	autocmd ColorScheme * call MyCustomHighlights()
+endif
+
 
 "----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
@@ -356,6 +380,13 @@ if index(g:bundle_group, 'echodoc') >= 0
 	Plug 'Shougo/echodoc.vim'
 	set noshowmode
 	let g:echodoc#enable_at_startup = 1
+endif
+
+"----------------------------------------------------------------------
+"polyglot 
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'polyglot') >= 0
+	Plug 'sheerun/vim-polyglot'
 endif
 
 "----------------------------------------------------------------------
@@ -672,6 +703,9 @@ if index(g:bundle_group, 'coc') >= 0
 	nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 	" Resume latest coc list
 	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+	" highlight
+	autocmd CursorHold * silent call CocActionAsync('highlight')
 endif
 
 
