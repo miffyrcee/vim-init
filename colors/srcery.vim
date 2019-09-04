@@ -5,8 +5,6 @@
 
 scriptencoding utf-8
 
-set background=dark
-
 if v:version > 580
   hi clear
   if exists('syntax_on')

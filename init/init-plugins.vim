@@ -14,10 +14,10 @@
 " 默认情况下的分组，可以再前面覆盖之
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
-	let g:bundle_group = ['basic', 'tags', 'enhanced','indentLine','rainbow']
+	let g:bundle_group = ['basic', 'tags', 'enhanced','coc','indentLine','rainbow']
 	let g:bundle_group += ['tags','nerdtree', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart']
-	let g:bundle_group += ['coc','semshi']
+	let g:bundle_group += ['semshi']
 endif
 
 
@@ -41,14 +41,22 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 " 默认插件 
 "----------------------------------------------------------------------
 
-" 全文快速移动，<leader><leader>f{char} 即可触发
-" Plug 'easymotion/vim-easymotion'
+" 图标
+Plug 'ryanoasis/vim-devicons'
+let g:webdevicons_enable_denite = 1
+
+" tabular
+Plug 'taigacute/spaceline.vim'
+let g:spaceline_seperate_style= 'arrow'
 
 " 文件浏览器，代替 netrw
 Plug 'justinmk/vim-dirvish'
 
-" 表格对齐，使用命令 Tabularize
-Plug 'godlygeek/tabular', { 'on': 'Tabularize' }
+" 表格对齐
+Plug 'junegunn/vim-easy-align'
+
+" 表格对齐，使用命令Tabularize
+Plug 'majutsushi/tagbar'
 
 " Diff 增强，支持 histogram / patience 等更科学的 diff 算法
 Plug 'chrisbra/vim-diff-enhanced'
@@ -183,9 +191,6 @@ if index(g:bundle_group, 'enhanced') >= 0
 	Plug 'tpope/vim-repeat'
 	silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
-	" .图标
-	Plug 'ryanoasis/vim-devicons'
-	let g:webdevicons_enable_denite = 1
 
 
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
@@ -376,6 +381,23 @@ if index(g:bundle_group, 'semshi') >= 0
 	" autocmd ColorScheme * call MyCustomHighlights()
 endif
 
+"----------------------------------------------------------------------
+" buffet
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'buffet') >= 0
+	Plug 'bagrat/vim-buffet'
+	nmap <leader>1 <Plug>BuffetSwitch(1)
+	nmap <leader>2 <Plug>BuffetSwitch(2)
+	nmap <leader>3 <Plug>BuffetSwitch(3)
+	nmap <leader>4 <Plug>BuffetSwitch(4)
+	nmap <leader>5 <Plug>BuffetSwitch(5)
+	nmap <leader>6 <Plug>BuffetSwitch(6)
+	nmap <leader>7 <Plug>BuffetSwitch(7)
+	nmap <leader>8 <Plug>BuffetSwitch(8)
+	nmap <leader>9 <Plug>BuffetSwitch(9)
+	nmap <leader>0 <Plug>BuffetSwitch(10)
+endif
+
 
 "----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
@@ -387,10 +409,11 @@ if index(g:bundle_group, 'echodoc') >= 0
 endif
 
 "----------------------------------------------------------------------
-" spaceline
+" language
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'spaceline') >= 0
-	Plug 'taigacute/spaceline.vim'
+if index(g:bundle_group, 'language') >= 0
+	Plug 'vim-python/python-syntax'
+	let g:python_highlight_all = 1
 endif
 
 "----------------------------------------------------------------------
@@ -581,9 +604,6 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	Plug 'itchyny/lightline.vim'
-	Plug 'taigacute/spaceline.vim'
-	let g:spaceline_seperate_style= 'arrow'
 
 " if hidden is not set, TextEdit might fail.
 	set hidden
