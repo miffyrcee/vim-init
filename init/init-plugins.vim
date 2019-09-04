@@ -47,7 +47,7 @@ let g:webdevicons_enable_denite = 1
 
 " tabular
 Plug 'taigacute/spaceline.vim'
-let g:spaceline_seperate_style= 'arrow'
+let g:spaceline_seperate_style= 'curve'
 
 " 文件浏览器，代替 netrw
 Plug 'justinmk/vim-dirvish'
@@ -114,7 +114,7 @@ if index(g:bundle_group, 'basic') >= 0
 	Plug 'kshenoy/vim-signature'
 
 	" 用于在侧边符号栏显示 git/svn 的 diff
-	Plug 'mhinz/vim-signify'
+	" Plug 'mhinz/vim-signify'
 
 	" 根据 quickfix 中匹配到的错误信息，高亮对应文件的错误行
 	" 使用 :RemoveErrorMarkers 命令或者 <space>ha 清除错误
@@ -125,9 +125,6 @@ if index(g:bundle_group, 'basic') >= 0
 
 	" 提供基于 TAGS 的定义预览，函数参数预览，quickfix 预览
 	Plug 'skywind3000/vim-preview'
-
-	" Git 支持
-	Plug 'tpope/vim-fugitive'
 
 	" 多游标支持
 	Plug 'terryma/vim-multiple-cursors'
@@ -141,23 +138,6 @@ if index(g:bundle_group, 'basic') >= 0
 	" 使用 <space>ha 清除 errormarker 标注的错误
 	noremap <silent><space>ha :RemoveErrorMarkers<cr>
 
-	" signify 调优
-	let g:signify_vcs_list = ['git', 'svn']
-	let g:signify_sign_add               = '+'
-	let g:signify_sign_delete            = '_'
-	let g:signify_sign_delete_first_line = '‾'
-	let g:signify_sign_change            = '~'
-	let g:signify_sign_changedelete      = g:signify_sign_change
-
-	" git 仓库使用 histogram 算法进行 diff
-	let g:signify_vcs_cmds = {
-			\ 'git': 'git diff --no-color --diff-algorithm=histogram --no-ext-diff -U0 -- %f',
-			\}
-	let g:calendar_navi = 'top'
-	let g:EchoFuncTrimSize = 1
-	let g:EchoFuncBallonOnly = 1
-	let g:startify_disable_at_vimenter = 1
-	let g:startify_session_dir = '~/.vim/session'
 endif
 
 
