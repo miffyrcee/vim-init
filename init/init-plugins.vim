@@ -14,7 +14,7 @@
 " 默认情况下的分组，可以再前面覆盖之
 "----------------------------------------------------------------------
 if !exists('g:bundle_group')
-	let g:bundle_group = ['basic', 'tags', 'enhanced','coc','indentLine','rainbow']
+	let g:bundle_group = ['basic', 'tags', 'enhanced','coc','language','indentLine','rainbow']
 	let g:bundle_group += ['tags','nerdtree', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart']
 	let g:bundle_group += ['semshi']
@@ -248,28 +248,6 @@ endif
 
 
 "----------------------------------------------------------------------
-" airline
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'airline') >= 0
-	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
-	let g:airline_left_sep = ''
-	let g:airline_left_alt_sep = ''
-	let g:airline_right_sep = ''
-	let g:airline_right_alt_sep = ''
-	let g:airline_powerline_fonts = 0
-	let g:airline_exclude_preview = 1
-	let g:airline_section_b = '%n'
-	let g:airline_theme='deus'
-	let g:airline#extensions#branch#enabled = 0
-	let g:airline#extensions#syntastic#enabled = 0
-	let g:airline#extensions#fugitiveline#enabled = 0
-	let g:airline#extensions#csv#enabled = 0
-	let g:airline#extensions#vimagit#enabled = 0
-	let g:airline#extensions#coc#enabled = 1
-endif
-
-"----------------------------------------------------------------------
 " NERDTree
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'nerdtree') >= 0
@@ -289,71 +267,51 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'ale') >= 0
 	Plug 'w0rp/ale'
-
-	" 设定延迟和提示信息
-	let g:ale_completion_delay = 500
-	let g:ale_echo_delay = 20
-	let g:ale_lint_delay = 500
-	let g:ale_echo_msg_format = '[%linter%] %code: %%s'
-
-	" 设定检测的时机：normal 模式文字改变，或者离开 insert模式
-	" 禁用默认 INSERT 模式下改变文字也触发的设置，太频繁外，还会让补全窗闪烁
-	let g:ale_lint_on_text_changed = 'normal'
-	let g:ale_lint_on_insert_leave = 1
-
-	" 在 linux/mac 下降低语法检查程序的进程优先级（不要卡到前台进程）
-	if has('win32') == 0 && has('win64') == 0 && has('win32unix') == 0
-		let g:ale_command_wrapper = 'nice -n5'
-	endif
-
-	" 允许 airline 集成
-	let g:airline#extensions#ale#enabled = 1
-
-	" 编辑不同文件类型需要的语法检查器
-	let g:ale_linters = {
-				\ 'c': ['gcc', 'cppcheck'], 
-				\ 'cpp': ['gcc', 'cppcheck'], 
-				\ 'python': ['flake8', 'pylint','pyls'], 
-				\ 'lua': ['luac'], 
-				\ 'go': ['go build', 'gofmt'],
-				\ 'java': ['javac'],
-				\ 'javascript': ['eslint'], 
-				\ }
-
-
-	" 获取 pylint, flake8 的配置文件，在 vim-init/tools/conf 下面
-	function s:lintcfg(name)
-		let conf = s:path('tools/conf/')
-		let path1 = conf . a:name
-		let path2 = expand('~/.vim/linter/'. a:name)
-		if filereadable(path2)
-			return path2
-		endif
-		return shellescape(filereadable(path2)? path2 : path1)
-	endfunc
-
-	" 设置 flake8/pylint 的参数
-	let g:ale_python_flake8_options = '--conf='.s:lintcfg('flake8.conf')
-	let g:ale_python_pylint_options = '--rcfile='.s:lintcfg('pylint.conf')
-	let g:ale_python_pylint_options .= ' --disable=W'
-	let g:ale_c_gcc_options = '-Wall -O2 -std=c99'
-	let g:ale_cpp_gcc_options = '-Wall -O2 -std=c++14'
-	let g:ale_c_cppcheck_options = ''
-	let g:ale_cpp_cppcheck_options = ''
-
-	let g:ale_linters.text = ['textlint', 'write-good', 'languagetool']
-
-	" 如果没有 gcc 只有 clang 时（FreeBSD）
-	if executable('gcc') == 0 && executable('clang')
-		let g:ale_linters.c += ['clang']
-		let g:ale_linters.cpp += ['clang']
-	endif
+	let g:ale_sign_column_always = 1
+	let g:ale_set_highlights = 0
+	let g:ale_sign_error = '!'
+	let g:ale_sign_warning = '~'
+	let g:ale_echo_msg_error_str = 'E'
+	let g:ale_echo_msg_warning_str = 'W'
+	let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+	let g:ale_lintetrs = {
+      \ 'go': ['golangci-linter'],
+      \'javascript': ['eslint', 'stylelint'],
+      \'jsx': ['eslint', 'stylelint'],
+      \'less': ['prettier'],
+      \ }
 endif
 
 "----------------------------------------------------------------------
-" semshi
+" buffet
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'semshi') >= 0
+if index(g:bundle_group, 'buffet') >= 0
+	Plug 'bagrat/vim-buffet'
+	let g:buffet_tab_icon = "\uf00a"
+	function! g:BuffetSetCustomColors()
+		hi! BuffetCurrentBuffer cterm=NONE ctermbg=106 ctermfg=8 guibg=#b8bb26 guifg=#000000
+		hi! BuffetTrunc cterm=bold ctermbg=66 ctermfg=8 guibg=#458588 guifg=#000000
+		hi! BuffetBuffer cterm=NONE ctermbg=239 ctermfg=8 guibg=#504945 guifg=#000000
+		hi! BuffetTab cterm=NONE ctermbg=66 ctermfg=8 guibg=#458588 guifg=#000000
+		hi! BuffetActiveBuffer cterm=NONE ctermbg=10 ctermfg=239 guibg=#999999 guifg=#504945
+	endfunction
+endif
+
+
+"----------------------------------------------------------------------
+" echodoc：搭配 YCM/deoplete 在底部显示函数参数
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'echodoc') >= 0
+	Plug 'Shougo/echodoc.vim'
+	set noshowmode
+	let g:echodoc#enable_at_startup = 1
+endif
+
+"----------------------------------------------------------------------
+" language
+"----------------------------------------------------------------------
+if index(g:bundle_group, 'language') >= 0
+	Plug 'tmhedberg/SimpylFold'
 	Plug 'numirias/semshi'
 	let g:semshi#mark_selected_nodes=0
 	let g:semshi#error_sign=0
@@ -377,43 +335,8 @@ if index(g:bundle_group, 'semshi') >= 0
 	function MyCustomHighlights()
 		hi semshiGlobal      ctermfg=red guifg=#ff0000
 	endfunction
-	" autocmd FileType python call MyCustomHighlights()
-	" autocmd ColorScheme * call MyCustomHighlights()
-endif
-
-"----------------------------------------------------------------------
-" buffet
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'buffet') >= 0
-	Plug 'bagrat/vim-buffet'
-	nmap <leader>1 <Plug>BuffetSwitch(1)
-	nmap <leader>2 <Plug>BuffetSwitch(2)
-	nmap <leader>3 <Plug>BuffetSwitch(3)
-	nmap <leader>4 <Plug>BuffetSwitch(4)
-	nmap <leader>5 <Plug>BuffetSwitch(5)
-	nmap <leader>6 <Plug>BuffetSwitch(6)
-	nmap <leader>7 <Plug>BuffetSwitch(7)
-	nmap <leader>8 <Plug>BuffetSwitch(8)
-	nmap <leader>9 <Plug>BuffetSwitch(9)
-	nmap <leader>0 <Plug>BuffetSwitch(10)
-endif
-
-
-"----------------------------------------------------------------------
-" echodoc：搭配 YCM/deoplete 在底部显示函数参数
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'echodoc') >= 0
-	Plug 'Shougo/echodoc.vim'
-	set noshowmode
-	let g:echodoc#enable_at_startup = 1
-endif
-
-"----------------------------------------------------------------------
-" language
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'language') >= 0
-	Plug 'vim-python/python-syntax'
-	let g:python_highlight_all = 1
+	autocmd FileType python call MyCustomHighlights()
+	autocmd ColorScheme * call MyCustomHighlights()
 endif
 
 "----------------------------------------------------------------------
@@ -428,16 +351,13 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'indentLine') >= 0
 	Plug 'Yggdroot/indentLine'
-	let g:indentLine_color_term = 178        
-	" let g:indentLine_color_gui = '#e3f9fd'    
-	" let g:indentLine_color_term = 239        
-	" let g:indentLine_color_gui = '#A4E57E'    
-	let g:indentLine_color_tty_light = 7 " (default: 4)    
-	let g:indentLine_color_dark = 1 " (default: 2)    
-	" let g:indentLine_bgcolor_term = 202      
-	" let g:indentLine_bgcolor_gui = '#FF5F00'    
-	let g:indentLine_char = '┊'    
-	let g:indentLine_enabled = 1 
+	let g:indentline_enabled = 1
+	let g:indentline_char='┆'
+	let g:indentLine_fileTypeExclude = ['defx', 'denite','startify','tagbar','vista_kind','vista']
+	let g:indentLine_concealcursor = 'niv'
+	let g:indentLine_color_term = 96
+	let g:indentLine_color_gui= '#725972'
+	let g:indentLine_showFirstIndentLevel =1
 endif
 
 "----------------------------------------------------------------------
@@ -623,6 +543,10 @@ if index(g:bundle_group, 'coc') >= 0
 
 	" always show signcolumns
 	set signcolumn=yes
+
+	let g:coc_global_extensions =['coc-html','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-tabnine','coc-marketplace','coc-gitignore','coc-yank']
+
+	let b:coc_pairs_disabled = ['`','<']
 
 	" Use tab for trigger completion with characters ahead and navigate.
 	" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
