@@ -16,7 +16,7 @@
 if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced','indentLine','rainbow']
 	let g:bundle_group += ['tags','nerdtree', 'echodoc']
-	let g:bundle_group += ['leaderf','neofomart','airline']
+	let g:bundle_group += ['leaderf','neofomart']
 	let g:bundle_group += ['coc','semshi']
 endif
 
@@ -185,6 +185,8 @@ if index(g:bundle_group, 'enhanced') >= 0
 
 	" .图标
 	Plug 'ryanoasis/vim-devicons'
+	let g:webdevicons_enable_denite = 1
+
 
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
@@ -341,13 +343,6 @@ if index(g:bundle_group, 'ale') >= 0
 		let g:ale_linters.c += ['clang']
 		let g:ale_linters.cpp += ['clang']
 	endif
-endif
-
-"----------------------------------------------------------------------
-" tabnine
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'tabnine') >= 0
-	Plug 'zxqfl/tabnine-vim'
 endif
 
 "----------------------------------------------------------------------
@@ -586,7 +581,11 @@ endif
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'coc') >= 0
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	" Plug 'neoclide/coc.nvim', {'do': 'nodejs-yarn install --frozen-lockfile'}
+	Plug 'itchyny/lightline.vim'
+	Plug 'taigacute/spaceline.vim'
+	let g:spaceline_seperate_style= 'arrow'
+
+" if hidden is not set, TextEdit might fail.
 	set hidden
 
 	" Some servers have issues with backup files, see #649
@@ -594,7 +593,7 @@ if index(g:bundle_group, 'coc') >= 0
 	set nowritebackup
 
 	" Better display for messages
-	" set cmdheight=2
+	set cmdheight=2
 
 	" You will have bad experience for diagnostic messages when it's default 4000.
 	set updatetime=300
@@ -690,18 +689,6 @@ if index(g:bundle_group, 'coc') >= 0
 	" Add status line support, for integration with other plugin, checkout `:h coc-status`
 	set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-	function! StatusDiagnostic() abort
-		let info = get(b:, 'coc_diagnostic_info', {})
-		if empty(info) | return '' | endif
-		let msgs = []
-		if get(info, 'error', 0)
-			call add(msgs, 'E' . info['error'])
-		endif
-		if get(info, 'warning', 0)
-			call add(msgs, 'W' . info['warning'])
-		endif
-		return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-	endfunction
 	" Using CocList
 	" Show all diagnostics
 	nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -719,34 +706,26 @@ if index(g:bundle_group, 'coc') >= 0
 	nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 	" Resume latest coc list
 	nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-	" highlight
-	autocmd CursorHold * silent call CocActionAsync('highlight')
-
-	" coc_list
-	command! -nargs=+ -complete=custom,s:GrepArgs Rg exe 'CocList grep '.<q-args>
-
-	function! s:GrepArgs(...)
-	  let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
-			\ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
-	  return join(list, "\n")
-	endfunction
-
-	" Keymapping for grep word under cursor with interactive mode
-	nnoremap <silent> <space>f :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
-
-	" coc_smartf
+	let g:lightline = {
+		  \ 'colorscheme': 'wombat',
+		  \ 'active': {
+		  \   'left': [ [ 'mode', 'paste' ],
+		  \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+		  \ },
+		  \ 'component_function': {
+		  \   'cocstatus': 'coc#status',
+		  \   'currentfunction': 'CocCurrentFunction'
+		  \ },
+		  \ }
 	" press <esc> to cancel.
 	nmap f <Plug>(coc-smartf-forward)
 	nmap F <Plug>(coc-smartf-backward)
 	nmap ; <Plug>(coc-smartf-repeat)
 	nmap , <Plug>(coc-smartf-repeat-opposite)
-
 	augroup Smartf
 	  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
 	  autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
 	augroup end
-
 endif
 
 
