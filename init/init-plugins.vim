@@ -42,7 +42,7 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 "----------------------------------------------------------------------
 
 " 全文快速移动，<leader><leader>f{char} 即可触发
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 
 " 文件浏览器，代替 netrw
 Plug 'justinmk/vim-dirvish'
@@ -121,6 +121,8 @@ if index(g:bundle_group, 'basic') >= 0
 	" Git 支持
 	Plug 'tpope/vim-fugitive'
 
+	" 多游标支持
+	Plug 'terryma/vim-multiple-cursors'
 	" 使用 ALT+E 来选择窗口
 	nmap <m-e> <Plug>(choosewin)
 
@@ -354,6 +356,9 @@ endif
 if index(g:bundle_group, 'semshi') >= 0
 	Plug 'numirias/semshi'
 	let g:semshi#mark_selected_nodes=0
+	let g:semshi#error_sign=0
+	let g:semshi#tolerate_syntax_errors=0
+	let g:semshi#self_to_attribut=0
 	hi semshiLocal           ctermfg=209 guifg=#ff875f
 	hi semshiGlobal          ctermfg=214 guifg=#ffaf00
 	hi semshiImported        ctermfg=214 guifg=#ffaf00 cterm=bold gui=bold
@@ -368,7 +373,7 @@ if index(g:bundle_group, 'semshi') >= 0
 
 	hi semshiErrorSign       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
 	hi semshiErrorChar       ctermfg=231 guifg=#ffffff ctermbg=160 guibg=#d70000
-	sign define semshiError text=E> texthl=semshiErrorSign
+	" sign define semshiError text=E> texthl=semshiErrorSign
 	function MyCustomHighlights()
 		hi semshiGlobal      ctermfg=red guifg=#ff0000
 	endfunction
@@ -710,6 +715,31 @@ if index(g:bundle_group, 'coc') >= 0
 
 	" highlight
 	autocmd CursorHold * silent call CocActionAsync('highlight')
+
+	" coc_list
+	command! -nargs=+ -complete=custom,s:GrepArgs Rg exe 'CocList grep '.<q-args>
+
+	function! s:GrepArgs(...)
+	  let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
+			\ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
+	  return join(list, "\n")
+	endfunction
+
+	" Keymapping for grep word under cursor with interactive mode
+	nnoremap <silent> <space>f :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
+
+	" coc_smartf
+	" press <esc> to cancel.
+	nmap f <Plug>(coc-smartf-forward)
+	nmap F <Plug>(coc-smartf-backward)
+	nmap ; <Plug>(coc-smartf-repeat)
+	nmap , <Plug>(coc-smartf-repeat-opposite)
+
+	augroup Smartf
+	  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#6638F0
+	  autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
+	augroup end
+
 endif
 
 
