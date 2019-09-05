@@ -44,10 +44,8 @@ call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 Plug 'ryanoasis/vim-devicons'
 let g:webdevicons_enable_denite = 1
 
-" statusline
 Plug 'taigacute/spaceline.vim'
 let g:spaceline_seperate_style= 'curve'
-
 
 " 文件浏览器，代替 netrw
 Plug 'justinmk/vim-dirvish'
@@ -202,16 +200,12 @@ endif
 "----------------------------------------------------------------------
 " ale：动态语法检查
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'ale') >= 0
-	Plug 'w0rp/ale'
-endif
+Plug 'w0rp/ale'
 
 "----------------------------------------------------------------------
 " buffet
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'buffet') >= 0
-	Plug 'bagrat/vim-buffet'
-endif
+Plug 'bagrat/vim-buffet'
 
 
 "----------------------------------------------------------------------
@@ -234,23 +228,17 @@ endif
 "----------------------------------------------------------------------
 "polyglot 
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'polyglot') >= 0
-	Plug 'sheerun/vim-polyglot'
-endif
+Plug 'sheerun/vim-polyglot'
 
 "----------------------------------------------------------------------
 " indentLine
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'indentLine') >= 0
-	Plug 'Yggdroot/indentLine'
-endif
+Plug 'Yggdroot/indentLine'
 
 "----------------------------------------------------------------------
 " rainbow
 "----------------------------------------------------------------------
-if index(g:bundle_group, 'rainbow') >= 0
-	Plug 'luochen1990/rainbow'
-endif
+Plug 'luochen1990/rainbow'
 
 
 
@@ -278,7 +266,6 @@ endif
 for f in split(glob('/home/miffyrcee/.vim/vim-init/core/plugins/*'),'\n')
 	execute 'source' f
 endfor
-
 "----------------------------------------------------------------------
 " 结束插件安装
 "----------------------------------------------------------------------

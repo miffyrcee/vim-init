@@ -1,4 +1,8 @@
+" 如果 vim 支持 python 则启用  Leaderf
 if has('python') || has('python3')
+	
+	let g:Lf_StlColorscheme = 'default'
+
 	" CTRL+p 打开文件模糊匹配
 	let g:Lf_ShortcutF = '<c-p>'
 
@@ -22,9 +26,6 @@ if has('python') || has('python3')
 
 	" 最大历史文件保存 2048 个
 	let g:Lf_MruMaxFiles = 2048
-
-	" ui 定制
-	let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '' }
 
 	" 如何识别项目目录，从当前文件目录向父目录递归知道碰到下面的文件/目录
 	let g:Lf_RootMarkers = ['.project', '.root', '.svn', '.git']
@@ -73,10 +74,10 @@ else
 
 	" 模糊匹配忽略
 	let g:ctrlp_custom_ignore = {
-	  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-	  \ 'file': '\v\.(exe|so|dll|mp3|wav|sdf|suo|mht)$',
-	  \ 'link': 'some_bad_symbolic_links',
-	  \ }
+		\ 'dir':  '\v[\/]\.(git|hg|svn)$',
+		\ 'file': '\v\.(exe|so|dll|mp3|wav|sdf|suo|mht)$',
+		\ 'link': 'some_bad_symbolic_links',
+		\ }
 
 	" 项目标志
 	let g:ctrlp_root_markers = ['.project', '.root', '.svn', '.git']
