@@ -130,3 +130,35 @@ highlight  gitSectionsRecentCommit guifg=#0087d7 guibg=NONE guisp=NONE gui=bold 
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+augroup MyAutoCmd
+
+    	" Reload vim config automatically
+    autocmd BufWritePost $VIM_PATH/{*.vim,*.yaml,vimrc} nested
+		\ source $MYVIMRC | redraw
+
+	autocmd WinEnter,InsertLeave * set cursorline
+
+	autocmd WinLeave,InsertEnter * set nocursorline
+
+    autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
+
+	autocmd Syntax * if 5000 < line('$') | syntax sync minlines=200 | endif
+
+    autocmd FileType css setlocal equalprg=csstidy\ -\ --silent=true
+
+    autocmd BufWritePre *.js,*.jsx,*.less,*.css,*.html Neoformat
+
+    autocmd FileType json syntax match Comment +\/\/.\+$+
+
+    " Go (Google)
+    autocmd FileType go let b:coc_pairs_disabled = ['<']
+
+    " HTML (.gohtml and .tpl for server side)
+    autocmd BufNewFile,BufRead *.html,*.htm,*.gohtml,*.tpl  setf html
+    " Magit
+     autocmd User VimagitEnterCommit startinsert
+
+	" https://webpack.github.io/docs/webpack-dev-server.html#working-with-editors-ides-supporting-safe-write
+	autocmd FileType css,javascript,jsx,javascript.jsx setlocal backupcopy=yes
+augroup END

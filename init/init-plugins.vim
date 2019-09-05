@@ -17,7 +17,6 @@ if !exists('g:bundle_group')
 	let g:bundle_group = ['basic', 'tags', 'enhanced','coc','language','indentLine','rainbow']
 	let g:bundle_group += ['tags','nerdtree', 'echodoc']
 	let g:bundle_group += ['leaderf','neofomart','buffet']
-	let g:bundle_group += ['semshi']
 endif
 
 
