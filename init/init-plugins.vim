@@ -165,6 +165,7 @@ if index(g:bundle_group, 'enhanced') >= 0
 
 	" .重复
 	Plug 'tpope/vim-repeat'
+
 	silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 
 
@@ -195,12 +196,9 @@ endif
 if index(g:bundle_group, 'nerdtree') >= 0
 	Plug 'scrooloose/nerdtree', {'on': ['NERDTree', 'NERDTreeFocus', 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
 	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
 endif
 
-"----------------------------------------------------------------------
-" ale：动态语法检查
-"----------------------------------------------------------------------
-Plug 'w0rp/ale'
 
 "----------------------------------------------------------------------
 " buffet
