@@ -89,6 +89,7 @@ function! s:setup_dirvish()
 endfunc
 
 augroup MyPluginSetup
+
 	autocmd!
 	autocmd FileType dirvish call s:setup_dirvish()
 augroup END

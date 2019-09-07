@@ -17,7 +17,6 @@
 
 "快速移动
 let mapleader = "\\"
-map <space><space> <Plug>(easymotion-prefix)
 
 "======================================================================
 "全文保存
@@ -26,6 +25,9 @@ function! SaveFile()
 	exec 'AsyncRun cat % |xsel -b -i'
 endfunc
 
+function! StartAsciinema()
+	exec 'asciinema rec -t  ~/Videos/'+strftime("%Y%m%d %H:%M") 
+endfunc
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位
 "----------------------------------------------------------------------

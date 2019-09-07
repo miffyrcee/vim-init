@@ -10,7 +10,7 @@ if has('python') || has('python3')
 	let g:Lf_ShortcutB = '<m-n>'
 
 	" CTRL+n 打开最近使用的文件 MRU，进行模糊匹配
-	noremap <c-n> :LeaderfMru<cr>
+	" noremap <c-n> :LeaderfMru<cr>
 
 	" ALT+p 打开函数列表，按 i 进入模糊匹配，ESC 退出
 	noremap <m-p> :LeaderfFunction!<cr>
