@@ -52,6 +52,9 @@ Plug 'justinmk/vim-dirvish'
 
 " 表格对齐
 Plug 'junegunn/vim-easy-align'
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " 表格对齐，使用命令Tabularize
 Plug 'majutsushi/tagbar'
@@ -63,55 +66,23 @@ Plug 'chrisbra/vim-diff-enhanced'
 Plug 'skywind3000/asyncrun.vim'
 
 "----------------------------------------------------------------------
-" Dirvish 设置：自动排序并隐藏文件，同时定位到相关文件
-" 这个排序函数可以将目录排在前面，文件排在后面，并且按照字母顺序排序
-" 比默认的纯按照字母排序更友好点。
-"----------------------------------------------------------------------
-function! s:setup_dirvish()
-	if &buftype != 'nofile' && &filetype != 'dirvish'
-		return
-	endif
-	if has('nvim')
-		return
-	endif
-	" 取得光标所在行的文本（当前选中的文件名）
-	let text = getline('.')
-	if ! get(g:, 'dirvish_hide_visible', 0)
-		exec 'silent keeppatterns g@\v[\/]\.[^\/]+[\/]?$@d _'
-	endif
-	" 排序文件名
-	exec 'sort ,^.*[\/],'
-	let name = '^' . escape(text, '.*[]~\') . '[/*|@=|\\*]\=\%($\|\s\+\)'
-	" 定位到之前光标处的文件
-	call search(name, 'wc')
-	noremap <silent><buffer> ~ :Dirvish ~<cr>
-	noremap <buffer> % :e %
-endfunc
-
-augroup MyPluginSetup
-
-	autocmd!
-	autocmd FileType dirvish call s:setup_dirvish()
-augroup END
-
-
-"----------------------------------------------------------------------
 " 基础插件
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'basic') >= 0
 
 	" 展示开始画面，显示最近编辑过的文件
 	Plug 'mhinz/vim-startify'
+	let g:startify_disable_at_vimenter = 1
+	let g:startify_session_dir = '~/.vim/session'
 
 	" 一次性安装一大堆 colorscheme
 	Plug 'flazz/vim-colorschemes'
+
 	" 支持库，给其他插件用的函数库
-	
 	Plug 'xolox/vim-misc'
 
 	" 用于在侧边符号栏显示 marks （ma-mz 记录的位置）
 	Plug 'kshenoy/vim-signature'
-
 
 	" 根据 quickfix 中匹配到的错误信息，高亮对应文件的错误行
 	" 使用 :RemoveErrorMarkers 命令或者 <space>ha 清除错误
@@ -119,21 +90,23 @@ if index(g:bundle_group, 'basic') >= 0
 
 	" 使用 ALT+e 会在不同窗口/标签上显示 A/B/C 等编号，然后字母直接跳转
 	Plug 't9md/vim-choosewin'
+	" 使用 ALT+E 来选择窗口
+	nmap <m-e> <Plug>(choosewin)
 
 	" 提供基于 TAGS 的定义预览，函数参数预览，quickfix 预览
 	Plug 'skywind3000/vim-preview'
 
-	" 多游标支持
-	Plug 'terryma/vim-multiple-cursors'
-	" 使用 ALT+E 来选择窗口
-	nmap <m-e> <Plug>(choosewin)
-
-	" 默认不显示 startify
-	let g:startify_disable_at_vimenter = 1
-	let g:startify_session_dir = '~/.vim/session'
-
 	" 使用 <space>ha 清除 errormarker 标注的错误
 	noremap <silent><space>ha :RemoveErrorMarkers<cr>
+
+	Plug 'tmhedberg/SimpylFold',{'for':'python'}
+	Plug 'numirias/semshi',{'for':'python'}
+	Plug 'sheerun/vim-polyglot'
+	Plug 'Yggdroot/indentLine'
+	Plug 'luochen1990/rainbow'
+	Plug 'sbdchd/neoformat'
+	Plug 'Yggdroot/LeaderF'
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 endif
 
@@ -146,18 +119,6 @@ if index(g:bundle_group, 'enhanced') >= 0
 	" 用 v 选中一个区域后，ALT_+/- 按分隔符扩大/缩小选区
 	Plug 'terryma/vim-expand-region'
 
-	" 使用 :FlyGrep 命令进行实时 grep
-	Plug 'wsdjeg/FlyGrep.vim'
-
-	" 使用 :CtrlSF 命令进行模仿 sublime 的 grep
-	Plug 'dyng/ctrlsf.vim'
-
-	" 提供 gist 接口
-	Plug 'lambdalisue/vim-gista', { 'on': 'Gista' }
-	
-	" fz
-	Plug 'junegunn/fzf'
-
 	"添加外括号
 	Plug 'wellle/targets.vim'
 
@@ -166,9 +127,7 @@ if index(g:bundle_group, 'enhanced') >= 0
 
 	" .重复
 	Plug 'tpope/vim-repeat'
-
 	silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-
 
 
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
@@ -214,52 +173,6 @@ if index(g:bundle_group, 'echodoc') >= 0
 	Plug 'Shougo/echodoc.vim'
 	set noshowmode
 	let g:echodoc#enable_at_startup = 1
-endif
-
-"----------------------------------------------------------------------
-" language
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'language') >= 0
-	Plug 'tmhedberg/SimpylFold'
-	Plug 'numirias/semshi'
-endif
-
-"----------------------------------------------------------------------
-"polyglot 
-"----------------------------------------------------------------------
-Plug 'sheerun/vim-polyglot'
-
-"----------------------------------------------------------------------
-" indentLine
-"----------------------------------------------------------------------
-Plug 'Yggdroot/indentLine'
-
-"----------------------------------------------------------------------
-" rainbow
-"----------------------------------------------------------------------
-Plug 'luochen1990/rainbow'
-
-
-
-"----------------------------------------------------------------------
-" neoformat
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'neofomart') >= 0
-	Plug 'sbdchd/neoformat'
-endif
-
-"----------------------------------------------------------------------
-" LeaderF：CtrlP / FZF 的超级代替者，文件模糊匹配，tags/函数名 选择
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'leaderf') >= 0
-	Plug 'Yggdroot/LeaderF'
-endif
-
-"----------------------------------------------------------------------
-" coc.nvim
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'coc') >= 0
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 endif
 
 for f in split(glob('/home/miffyrcee/.vim/vim-init/core/plugins/*'),'\n')
