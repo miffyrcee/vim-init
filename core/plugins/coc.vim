@@ -104,6 +104,13 @@ nnoremap <silent> <space>f  :<C-u>CocList lines<CR>
 
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
 
+nnoremap <silent> <space>b  :<C-u>CocList buffers<CR>
+
+nnoremap <silent> <space>h  :<C-u>CocList cmdhistory<CR>
+
+nnoremap <silent> <space>l  :<C-u>CocList lists<CR>
+
+
 " coc-smartf
 nmap f <Plug>(coc-smartf-forward)
 nmap F <Plug>(coc-smartf-backward)
@@ -130,5 +137,16 @@ function! s:select_current_word()
   return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
 endfunc
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
-
-
+                    
+                    
+let b:top_dir = expand('%:h')
+for _ in range(10)  
+    if !isdirectory(b:top_dir.'/.git')
+        let b:_split_path =split(b:top_dir,'/')[0:-2]
+		let b:top_dir = '/'.join(b:_split_path,'/')
+	else
+		break
+	endif
+endfor
+nnoremap <silent> <space>w  :exe 'CocList  -I --normal --input='.expand('<cword>').' words'<CR>
+nnoremap <silent> <space>w  :exe 'CocList  -I --normal --input='.expand('<cword>').' grep'<CR>

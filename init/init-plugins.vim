@@ -101,7 +101,7 @@ if index(g:bundle_group, 'basic') >= 0
 
 	Plug 'tmhedberg/SimpylFold',{'for':'python'}
 	Plug 'numirias/semshi',{'for':'python'}
-	Plug 'sheerun/vim-polyglot'
+	Plug 'sheerun/vim-polyglot',{'for':'python'}
 	Plug 'Yggdroot/indentLine'
 	Plug 'luochen1990/rainbow'
 	Plug 'sbdchd/neoformat'
