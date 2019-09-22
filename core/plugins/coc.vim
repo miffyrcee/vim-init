@@ -100,9 +100,10 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-nnoremap <silent> <space>f  :<C-u>CocList lines<CR>
+nnoremap <silent> /  :<C-u>CocList lines<CR>
 
-nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+" nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+nnoremap <silent> #  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
 
 nnoremap <silent> <space>b  :<C-u>CocList buffers<CR>
 
@@ -110,6 +111,7 @@ nnoremap <silent> <space>h  :<C-u>CocList cmdhistory<CR>
 
 nnoremap <silent> <space>l  :<C-u>CocList lists<CR>
 
+nnoremap <silent> <space>w  :exe 'CocList  -I --normal --input='.expand('<cword>').' grep'<CR>
 
 " coc-smartf
 nmap f <Plug>(coc-smartf-forward)
@@ -125,7 +127,7 @@ augroup end
 " coc-paris
 let b:coc_pairs_disabled = ['<','`']
 
-let g:coc_global_extensions =['coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank']
+let g:coc_global_extensions =['coc-imselect','coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank','coc-smartf']
 
 
 " coc-cursor
@@ -148,5 +150,3 @@ for _ in range(10)
 		break
 	endif
 endfor
-nnoremap <silent> <space>w  :exe 'CocList  -I --normal --input='.expand('<cword>').' words'<CR>
-nnoremap <silent> <space>w  :exe 'CocList  -I --normal --input='.expand('<cword>').' grep'<CR>
