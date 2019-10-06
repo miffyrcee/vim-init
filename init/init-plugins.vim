@@ -101,12 +101,15 @@ if index(g:bundle_group, 'basic') >= 0
 
 	Plug 'tmhedberg/SimpylFold',{'for':'python'}
 	Plug 'numirias/semshi',{'for':'python'}
+	let g:semshi#excluded_buffer=['*']
+
 	Plug 'sheerun/vim-polyglot',{'for':'python'}
 	Plug 'Yggdroot/indentLine'
 	Plug 'luochen1990/rainbow'
 	Plug 'sbdchd/neoformat'
 	Plug 'Yggdroot/LeaderF'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 endif
 
@@ -120,10 +123,10 @@ if index(g:bundle_group, 'enhanced') >= 0
 	Plug 'terryma/vim-expand-region'
 
 	"添加外括号
-	Plug 'wellle/targets.vim'
+	Plug 'tpope/vim-surround'
 
 	"iw跳转
-	Plug 'tpope/vim-surround'
+	Plug 'wellle/targets.vim'
 
 	" .重复
 	Plug 'tpope/vim-repeat'
@@ -149,21 +152,13 @@ if index(g:bundle_group, 'tags') >= 0
 	Plug 'skywind3000/gutentags_plus'
 endif
 
-
-"----------------------------------------------------------------------
-" NERDTree
-"----------------------------------------------------------------------
-if index(g:bundle_group, 'nerdtree') >= 0
-	Plug 'scrooloose/nerdtree', {'on': ['NERDTree', 'NERDTreeFocus', 'NERDTreeToggle', 'NERDTreeCWD', 'NERDTreeFind'] }
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-	Plug 'Xuyuanp/nerdtree-git-plugin'
-endif
-
-
 "----------------------------------------------------------------------
 " buffet
 "----------------------------------------------------------------------
 Plug 'bagrat/vim-buffet'
+nmap <c-o> :bp<cr>
+imap <c-o> <esc>:bp<cr>
+
 
 
 "----------------------------------------------------------------------

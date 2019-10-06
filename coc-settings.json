@@ -3,7 +3,7 @@
     "tabnine.priority": 99,
     "suggest.timeout": 500,
     "suggest.detailField": "preview",
-    "suggest.snippetIndicator": "",
+    "suggest.snippetIndicator": "",
     "suggest.triggerCompletionWait": 100,
     "suggest.echodocSupport": true,
     "suggest.completionItemKindLabels": {
@@ -35,8 +35,8 @@
     },
     //diagnostic
     "diagnostic.signOffset": 9999999,
-    "diagnostic.errorSign": "!",
-    "diagnostic.warningSign": "!",
+    //"diagnostic.errorSign": "猪",
+    //"diagnostic.warningSign": "警",
     "diagnostic.displayByAle": false,
     "diagnostic.refreshOnInsertMode": true,
     //git
@@ -50,15 +50,50 @@
     "git.removedSign.hlGroup": "GitGutterDelete",
     "git.topRemovedSign.hlGroup": "GitGutterDelete",
     "git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
-    "git.addedSign.text": "+",
-    "git.changedSign.text": "~",
-    "git.removedSign.text": "-",
-    "git.topRemovedSign.text": "s-",
-    "git.changeRemovedSign.text": "s~",
     //Snippet
     "coc.preferences.snippetStatusText": "Ⓢ ",
     //python
     "python.autoComplete.addBrackets": true,
     "python.jediEnabled": false,
-    "yank.enableCompletion": false
+    "yank.enableCompletion": false,
+    //coc-list
+    "list.source.tags.command": "gtags ~/.cache/",
+    "list.source.files.args": ["--hidden", "--files"],
+    //coc-flow
+    //session
+    "session.directory": "~/.cache/vim/session",
+    //multiple curssors
+    "cursors.nextKey": "<c-n>",
+    "cursors.previousKey": "<c-p>",
+    "cursors.cancelKey": "<esc>",
+    //language
+    "list.previewSplitRight": true,
+
+    "languageserver": {
+        "clangd": {
+            "command": "clangd",
+            "args": ["--background-index"],
+            "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+            "filetypes": ["c", "cpp", "objc", "objcpp"]
+        }
+    },
+    // coc-explorer
+    "explorer.icon.expanded": "▾",
+    "explorer.icon.shrinked": "▸",
+    "explorer.keyMappings": {
+        "l": "expandOrShrink"
+    },
+    "explorer.icon.enableNerdfont": true,
+
+    //prettier
+    "coc.preferences.formatOnSaveFiletypes": ["css", "markdown"],
+    "prettier.statusItemText": "ⓟ ",
+    "prettier.eslintIntegration": true,
+    "prettier.tslintIntegration": true,
+    "prettier.stylelintIntegration": true,
+
+    //translator
+    "translator.toLang": "zh",
+    "translator.engines": ["google"]
+
 }

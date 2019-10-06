@@ -102,16 +102,15 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent> /  :<C-u>CocList lines<CR>
 
-" nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
-nnoremap <silent> #  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
-
 nnoremap <silent> <space>b  :<C-u>CocList buffers<CR>
 
 nnoremap <silent> <space>h  :<C-u>CocList cmdhistory<CR>
 
 nnoremap <silent> <space>l  :<C-u>CocList lists<CR>
 
-nnoremap <silent> <space>w  :exe 'CocList  -I --normal --input='.expand('<cword>').' grep'<CR>
+nnoremap <silent> #  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+
+nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' grep'<CR>
 
 " coc-smartf
 nmap f <Plug>(coc-smartf-forward)
@@ -127,8 +126,10 @@ augroup end
 " coc-paris
 let b:coc_pairs_disabled = ['<','`']
 
-let g:coc_global_extensions =['coc-imselect','coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank','coc-smartf']
+let g:coc_global_extensions =['coc-imselect','coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank','coc-smartf','coc-calc','coc-explorer','coc-translator']
 
+" coc-explorer
+nmap ge :CocCommand explorer --toggle<CR>
 
 " coc-cursor
 nmap <expr> <silent> <C-d> <SID>select_current_word()
@@ -139,14 +140,7 @@ function! s:select_current_word()
   return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
 endfunc
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
-                    
-                    
-let b:top_dir = expand('%:h')
-for _ in range(10)  
-    if !isdirectory(b:top_dir.'/.git')
-        let b:_split_path =split(b:top_dir,'/')[0:-2]
-		let b:top_dir = '/'.join(b:_split_path,'/')
-	else
-		break
-	endif
-endfor
+
+
+" coc-translator
+nmap <c-g> <Plug>(coc-translator-e)
