@@ -35,8 +35,6 @@
     },
     //diagnostic
     "diagnostic.signOffset": 9999999,
-    //"diagnostic.errorSign": "猪",
-    //"diagnostic.warningSign": "警",
     "diagnostic.displayByAle": false,
     "diagnostic.refreshOnInsertMode": true,
     //git

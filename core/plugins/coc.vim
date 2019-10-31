@@ -6,21 +6,21 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
+function! s:chek_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <nilent><expr> <c-z> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap <nilent> [c <Plug>(coc-diagnostic-prev)
+nmap <nilent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -125,21 +125,30 @@ augroup end
 
 " coc-paris
 let b:coc_pairs_disabled = ['<','`']
+autocmd FileType markdown let b:coc_pairs_disabled
 
-let g:coc_global_extensions =['coc-imselect','coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank','coc-smartf','coc-calc','coc-explorer','coc-translator']
+
+let g:coc_global_extensions =['coc-imselect','coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank','coc-smartf','coc-calc','coc-explorer','coc-translator','coc-flow','coc-vimlsp']
 
 " coc-explorer
-nmap ge :CocCommand explorer --toggle<CR>
+noremap <silent> <leader>j :execute 'CocCommand explorer' .
+	\ ' --toggle' .
+	\ ' --sources=buffer+,file+' .
+	\ ' --file-columns=git,selection,icon,clip,indent,filename,size ' . expand('%:p:h')<CR>
 
 " coc-cursor
-nmap <expr> <silent> <C-d> <SID>select_current_word()
-function! s:select_current_word()
-  if !get(g:, 'coc_cursors_activated', 0)
-    return "\<Plug>(coc-cursors-word)"
-  endif
-  return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
-endfunc
 nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <expr> <silent> <C-m> <SID>select_current_word()
+xmap <silent> <C-d> <Plug>(coc-cursors-range)
+" use normal command like `<leader>xi(`
+nmap <leader>x  <Plug>(coc-cursors-operator)
+
+function! s:select_current_word()
+	if !get(g:, 'coc_cursors_activated', 0)
+		return "\<Plug>(coc-cursors-word)"
+	endif
+	return "*\<Plug>(coc-cursors-word):nohlsearch\<CR>"
+endfunc
 
 
 " coc-translator

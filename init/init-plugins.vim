@@ -33,7 +33,7 @@ endfunc
 "----------------------------------------------------------------------
 " 在 ~/.vim/bundles 下安装插件
 "----------------------------------------------------------------------
-call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
+call plug#begin(get(g:, '~/.vim/bundles', 'bundle_home'))
 
 
 "----------------------------------------------------------------------
@@ -109,10 +109,23 @@ if index(g:bundle_group, 'basic') >= 0
 	Plug 'sbdchd/neoformat'
 	Plug 'Yggdroot/LeaderF'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	Plug 'iamcco/markdown-preview.vim'
 	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+	Plug 'sillybun/vim-repl'
+	"Plug 'AndrewRadev/sideways.vim'
+	nnoremap <c-h> :SidewaysLeft<cr>
+	nnoremap <c-l> :SidewaysRight<cr>
+	
+
+	Plug 'rhysd/accelerated-jk'
+	nmap j <Plug>(accelerated_jk_gj)
+	nmap k <Plug>(accelerated_jk_gk)
+
+	Plug 'airblade/vim-rooter'
+	let g:rooter_change_directory_for_non_project_files = 'home'
+	let g:rooter_patterns = ['Rakefile', '.git/']
 
 endif
-
 
 "----------------------------------------------------------------------
 " 增强插件
@@ -127,12 +140,13 @@ if index(g:bundle_group, 'enhanced') >= 0
 
 	"iw跳转
 	Plug 'wellle/targets.vim'
+	autocmd User targets#mappings#user call targets#mappings#extend({
+	\ ' ': {'separator': [{'d': ' '}]},
+    \ })
 
 	" .重复
 	Plug 'tpope/vim-repeat'
 	silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-
-
 	" ALT_+/- 用于按分隔符扩大缩小 v 选区
 	map <m-=> <Plug>(expand_region_expand)
 	map <m--> <Plug>(expand_region_shrink)
@@ -156,8 +170,9 @@ endif
 " buffet
 "----------------------------------------------------------------------
 Plug 'bagrat/vim-buffet'
-nmap <c-o> :bp<cr>
-imap <c-o> <esc>:bp<cr>
+nmap <m-r> :bp<cr>
+imap <m-r> <esc>:bp<cr>
+
 
 
 
@@ -173,11 +188,8 @@ endif
 for f in split(glob('/home/miffyrcee/.vim/vim-init/core/plugins/*'),'\n')
 	execute 'source' f
 endfor
+
 "----------------------------------------------------------------------
 " 结束插件安装
 "----------------------------------------------------------------------
 call plug#end()
-augroup auto_save
-autocmd!
-autocmd BufWritePre ~/.vimrc undojoin | source ~/.vimrc
-augroup END

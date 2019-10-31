@@ -59,7 +59,7 @@ highlight  gitInfoUpstreamtitle  guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitInfoPushtitle   guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitCommitModetitle  guibg=NONE guisp=NONE gui=bold cterm=bold
 
-highlight  gitSectionsStaged guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
+highlight  gitSectionsStaged guifg=#0587d8 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsUnstaged guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsCommitMsg guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsCommitStash  guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
