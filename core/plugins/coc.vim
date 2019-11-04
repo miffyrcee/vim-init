@@ -6,21 +6,21 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:chek_back_space() abort
+function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <nilent><expr> <c-z> coc#refresh()
+inoremap <silent><expr> <c-z> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
-nmap <nilent> [c <Plug>(coc-diagnostic-prev)
-nmap <nilent> ]c <Plug>(coc-diagnostic-next)
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -100,7 +100,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-nnoremap <silent> /  :<C-u>CocList lines<CR>
+nnoremap <silent> /  :<C-u>CocList  lines<CR>
 
 nnoremap <silent> <space>b  :<C-u>CocList buffers<CR>
 
@@ -108,7 +108,7 @@ nnoremap <silent> <space>h  :<C-u>CocList cmdhistory<CR>
 
 nnoremap <silent> <space>l  :<C-u>CocList lists<CR>
 
-nnoremap <silent> #  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+nnoremap <silent> #  :exe 'CocList -I --number-select --normal --input='.expand('<cword>').' words'<CR>
 
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' grep'<CR>
 

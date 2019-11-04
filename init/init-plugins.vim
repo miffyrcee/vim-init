@@ -33,7 +33,7 @@ endfunc
 "----------------------------------------------------------------------
 " 在 ~/.vim/bundles 下安装插件
 "----------------------------------------------------------------------
-call plug#begin(get(g:, '~/.vim/bundles', 'bundle_home'))
+call plug#begin(get(g:, 'bundle_home', '~/.vim/bundles'))
 
 
 "----------------------------------------------------------------------
@@ -112,7 +112,7 @@ if index(g:bundle_group, 'basic') >= 0
 	Plug 'iamcco/markdown-preview.vim'
 	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 	Plug 'sillybun/vim-repl'
-	"Plug 'AndrewRadev/sideways.vim'
+	Plug 'AndrewRadev/sideways.vim'
 	nnoremap <c-h> :SidewaysLeft<cr>
 	nnoremap <c-l> :SidewaysRight<cr>
 	
