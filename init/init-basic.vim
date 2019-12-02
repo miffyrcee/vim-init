@@ -107,6 +107,7 @@ set wildignore+=*.msi,*.crx,*.deb,*.vfd,*.apk,*.ipa,*.bin,*.msu
 set wildignore+=*.gba,*.sfc,*.078,*.nds,*.smd,*.smc
 set wildignore+=*.linux2,*.win32,*.darwin,*.freebsd,*.linux,*.android
 
+" Enable true color
 if has('termguicolors')
 	set termguicolors
 endif
@@ -247,5 +248,3 @@ if has('folding')
 	set foldmethod=syntax
 	set foldlevelstart=99
 endif
-
-

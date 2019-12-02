@@ -7,12 +7,14 @@ set t_Co=256
 " 设置颜色主题，会在所有 runtimepaths 的 colors 目录寻找同名配置
 color gruvbox
 
+
+" hi Normal  ctermfg=252 ctermbg=none
 " Vim Colors
 " ---------------------------------------------------------
 hi Whitespace ctermfg=96 guifg=#725972 guibg=NONE ctermbg=NONE
-hi VertSplit  ctermfg=Black  guifg=Black
+hi VertSplit  ctermfg=Black  guifg=Black guibg=NONE ctermbg=NONE
 "hi Normal guibg=NONE ctermbg=NONE
-"hi LineNr ctermbg=NONE guibg=NONE
+hi LineNr ctermbg=NONE guibg=NONE
 hi SignColumn ctermfg=187 ctermbg=NONE guifg=#ebdbb2 guibg=NONE guisp=NONE cterm=NONE gui=NONE
 highlight! link pythonSpaceError  NONE
 highlight! link pythonIndentError NONE
@@ -20,7 +22,12 @@ highlight! link pythonIndentError NONE
 
 "Pmenu Colors
 " ---------------------------------------------------------
-hi PMenuSel ctermfg=252 ctermbg=106 guifg=#d0d0d0 guibg=#859900 guisp=#859900 cterm=NONE gui=NONE
+" hi PMenuSel ctermfg=252 ctermbg=106 guifg=#d0d0d0 guibg=#ba8baf guisp=#ba8baf cterm=NONE gui=NONE
+hi Pmenu ctermfg=103 ctermbg=236 guifg=#9a9aba guibg=#34323e guisp=NONE cterm=NONE gui=NONE
+hi PmenuSbar ctermfg=NONE ctermbg=234 guifg=NONE guibg=#212026 guisp=NONE cterm=NONE gui=NONE
+hi PmenuSel ctermfg=NONE ctermbg=60 guifg=NONE guibg=#5e5079 guisp=NONE cterm=NONE gui=NONE
+hi PmenuThumb ctermfg=NONE ctermbg=60 guifg=NONE guibg=#5d4d7a guisp=NONE cterm=NONE gui=NONE
+
 
 "coc setting
 " ---------------------------------------------------------
@@ -51,7 +58,7 @@ highlight def link Defx_filename_3_Unmerged Label
 " ---------------------------------------------------------
 highlight BufTabLineCurrent ctermbg=96 guibg=#5d4d7a
 
-" buftabline highlight
+" magit highlight
 " ---------------------------------------------------------
 highlight  gitInfoRepotitle    guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitInfoHeadtitle   guibg=NONE guisp=NONE gui=bold cterm=bold
@@ -59,17 +66,40 @@ highlight  gitInfoUpstreamtitle  guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitInfoPushtitle   guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitCommitModetitle  guibg=NONE guisp=NONE gui=bold cterm=bold
 
-highlight  gitSectionsStaged guifg=#0587d8 guibg=NONE guisp=NONE gui=bold cterm=bold
+highlight  gitSectionsStaged guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsUnstaged guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsCommitMsg guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsCommitStash  guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 highlight  gitSectionsRecentCommit guifg=#0087d7 guibg=NONE guisp=NONE gui=bold cterm=bold
 
+" tsx highlight
+" ---------------------------------------------------------
+" dark red
+hi tsxTagName guifg=#E06C75
+
+" orange
+hi tsxCloseString guifg=#F99575
+hi tsxCloseTag guifg=#F99575
+hi tsxAttributeBraces guifg=#F99575
+hi tsxEqual guifg=#F99575
+" light-grey
+hi tsxTypeBraces guifg=#999999
+" dark-grey
+hi tsxTypes guifg=#666666
+hi ReactState guifg=#C176A7
+hi ReactProps guifg=#D19A66
+hi ApolloGraphQL guifg=#CB886B
+hi Events ctermfg=204 guifg=#56B6C2
+hi ReduxKeywords ctermfg=204 guifg=#C678DD
+hi ReduxHooksKeywords ctermfg=204 guifg=#C176A7
+hi WebBrowser ctermfg=204 guifg=#56B6C2
+hi ReactLifeCycleMethods ctermfg=204 guifg=#D19A66
+
+
+" yellow
+hi tsxAttrib guifg=#F8BD7F cterm=italic
 "GetColorSynatxGroup
 " ---------------------------------------------------------
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 augroup MyAutoCmd
 
@@ -93,6 +123,11 @@ augroup MyAutoCmd
 
     " Go (Google)
     autocmd FileType go let b:coc_pairs_disabled = ['<']
+    autocmd FileType python let b:coc_pairs_disabled = ['<','`']
+
+    " set filetypes as typescript && tsx
+    autocmd BufNewFile,BufRead *.ts  set filetype=typescript
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 
     " HTML (.gohtml and .tpl for server side)
     autocmd BufNewFile,BufRead *.html,*.htm,*.gohtml,*.tpl  setf html

@@ -28,6 +28,11 @@ endfunc
 function! StartAsciinema()
 	exec 'asciinema rec -t  ~/Videos/'+strftime("%Y%m%d %H:%M") 
 endfunc
+
+" nnoremap <silent> <s-c> :call ShiftC()<cr>
+function! ShiftC()
+endfunc
+
 "----------------------------------------------------------------------
 " INSERT 模式下使用 EMACS 键位
 "----------------------------------------------------------------------
@@ -184,10 +189,11 @@ noremap <m-h> b
 noremap <m-l> w
 inoremap <m-h> <c-left>
 inoremap <m-l> <c-right>
+inoremap <m-f> <esc>ys$(
 
 " ALT+j/k 逻辑跳转下一行/上一行（按 wrap 逻辑换行进行跳转） 
-noremap <m-j> gj
-noremap <m-k> gk
+" noremap <m-j> gj
+" noremap <m-k> gk
 inoremap <m-j> <c-\><c-o>gj
 inoremap <m-k> <c-\><c-o>gk
 

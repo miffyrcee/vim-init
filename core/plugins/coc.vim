@@ -123,10 +123,6 @@ augroup Smartf
   autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
 augroup end
 
-" coc-paris
-let b:coc_pairs_disabled = ['<','`']
-autocmd FileType markdown let b:coc_pairs_disabled
-
 
 let g:coc_global_extensions =['coc-imselect','coc-html','coc-java','coc-tabnine','coc-css','coc-snippets','coc-prettier','coc-eslint','coc-emmet','coc-tsserver','coc-pairs','coc-json','coc-python','coc-imselect','coc-highlight','coc-git','coc-emoji','coc-lists','coc-stylelint','coc-yaml','coc-template','coc-marketplace','coc-gitignore','coc-yank','coc-smartf','coc-calc','coc-explorer','coc-translator','coc-flow','coc-vimlsp']
 

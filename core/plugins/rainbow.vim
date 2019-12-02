@@ -12,7 +12,7 @@ let g:rainbow_conf = {
 \			'parentheses_options': 'containedin=markdownCode contained', 
 \		},
 \		'lisp': {
-\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3','firebrick', 'darkorchid3'],
 \		},
 \		'haskell': {
 \			'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/\v\{\ze[^-]/ end=/}/ fold'],
