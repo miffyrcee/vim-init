@@ -192,9 +192,9 @@ set cpoptions-=m    " showmatch will wait 0.5s or until a char is typed
 set grepprg=rg\ --vimgrep\ $*
 set wildignore+=*.so,*~,*/.git/*,*/.svn/*,*/.DS_Store,*/tmp/*
 
-if has('conceal')
-	set conceallevel=3 concealcursor=niv
-endif
+" if has('conceal')
+" 	set conceallevel=3 concealcursor=niv
+" endif
 
 " Vim Directories {{{
 " ---------------

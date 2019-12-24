@@ -1,7 +1,8 @@
 " 如果 vim 支持 python 则启用  Leaderf
 if has('python') || has('python3')
-	
-	let g:Lf_StlColorscheme = 'gruvbox'
+	" let g:Lf_WindowPosition = 'popup'
+	let g:Lf_StlColorscheme = 'default'
+	" let g:Lf_StlSeparator = { 'left': "", 'right':"" }
 
 	" CTRL+p 打开文件模糊匹配
 	let g:Lf_ShortcutF = '<c-p>'
@@ -94,3 +95,25 @@ else
 	" ALT+n 匹配 buffer
 	noremap <m-n> :CtrlPBuffer<cr>
 endif
+let g:Lf_PopupPalette = {
+    \  'light': {
+    \      'Lf_hl_match': {
+    \                'gui': 'NONE',
+    \                'font': 'NONE',
+    \                'guifg': 'NONE',
+    \                'guibg': '#303136',
+    \                'cterm': 'NONE',
+    \                'ctermfg': 'NONE',
+    \                'ctermbg': '236'
+    \              },
+    \      'Lf_hl_cursorline': {
+    \                'gui': 'NONE',
+    \                'font': 'NONE',
+    \                'guifg': 'NONE',
+    \                'guibg': '#303136',
+    \                'cterm': 'NONE',
+    \                'ctermfg': 'NONE',
+    \                'ctermbg': '236'
+    \              },
+    \      },
+    \  }

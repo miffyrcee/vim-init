@@ -69,8 +69,7 @@ if index(g:bundle_group, 'basic') >= 0
 	" 提供基于 TAGS 的定义预览，函数参数预览，quickfix 预览
 	Plug 'skywind3000/vim-preview'
 	" 使用 <space>ha 清除 errormarker 标注的错误
-
-	Plug 'tmhedberg/SimpylFold',{'for':'python'}
+	" Plug 'tmhedberg/SimpylFold',{'for':'python'}
 	Plug 'numirias/semshi',{'for':'python'}
 	let g:semshi#excluded_buffer=['*']
 	" Plug 'sheerun/vim-polyglot',{'for':'python'}
@@ -80,14 +79,10 @@ if index(g:bundle_group, 'basic') >= 0
 	Plug 'Yggdroot/LeaderF'
 	Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	Plug 'iamcco/markdown-preview.vim'
-	" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-	Plug 'sillybun/vim-repl'
 	Plug 'AndrewRadev/sideways.vim'
-	
 	Plug 'rhysd/accelerated-jk'
 	nmap j <Plug>(accelerated_jk_gj)
 	nmap k <Plug>(accelerated_jk_gk)
-
 	Plug 'airblade/vim-rooter'
 	let g:rooter_change_directory_for_non_project_files = 'home'
 	let g:rooter_patterns = ['Rakefile', '.git/']
@@ -112,7 +107,6 @@ if index(g:bundle_group, 'enhanced') >= 0
 	Plug 'terryma/vim-expand-region'
 	"添加外括号
 	Plug 'tpope/vim-surround'
-
 	"iw跳转
 	Plug 'wellle/targets.vim'
 	autocmd User targets#mappings#user call targets#mappings#extend({
@@ -128,11 +122,13 @@ if index(g:bundle_group, 'enhanced') >= 0
 	Plug 'jvanja/vim-bootstrap4-snippets'
 	Plug 'junegunn/fzf'
 	Plug 'liuchengxu/vista.vim'
-	nnoremap <silent><localleader>fv :Vista!!<CR>
+	" nnoremap <silent><localleader>fv :Vista!!<CR>
 	nnoremap <silent><leader>v :Vista coc<CR>
+	Plug 'KabbAmine/zeavim.vim'
+	nmap <silent><m-f> <esc>viw<Plug>ZVVisSelection
+	nmap <leader>d <esc>:Docset 
 
 endif
-
 "----------------------------------------------------------------------
 " 自动生成 ctags/gtags，并提供自动索引功能
 " 不在 git/svn 内的项目，需要在项目根目录 touch 一个空的 .root 文件
@@ -149,8 +145,7 @@ endif
 " buffet
 "----------------------------------------------------------------------
 inoremap <silent> <m-r> <esc>:bp<cr>
-
-"----------------------------------------------------------------------
+"conceallevel----------------------------------------------------------------------
 " echodoc：搭配 YCM/deoplete 在底部显示函数参数
 "----------------------------------------------------------------------
 if index(g:bundle_group, 'echodoc') >= 0
@@ -164,8 +159,8 @@ endif
 for f in split(glob('$HOME/.vim/vim-init/core/plugins/*'),'\n')
 	execute 'source' f
 endfor
-
 "----------------------------------------------------------------------
+"
 " 结束插件安装
 "----------------------------------------------------------------------
 call plug#end()
